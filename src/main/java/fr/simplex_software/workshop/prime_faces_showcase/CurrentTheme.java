@@ -11,7 +11,7 @@ import java.io.*;
 @SessionScoped
 public class CurrentTheme implements Serializable
 {
-  private String theme;
+  private String theme ="aristo";
 
   public CurrentTheme()
   {
@@ -24,8 +24,10 @@ public class CurrentTheme implements Serializable
     return theme;
   }
 
-  public void setTheme(String theme)
+  public void setTheme(String theme) throws IOException
   {
     this.theme = theme;
+    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+    ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
   }
 }

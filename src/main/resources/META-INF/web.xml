@@ -34,7 +34,7 @@
   </context-param>
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>black-tie</param-value>
+    <param-value>#{currentTheme.theme}</param-value>
   </context-param>
   <!-- Context parameters - MyFaces -->
   <context-param>
