@@ -1,66 +1,70 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter7;
 
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.event.*;
+import org.primefaces.model.*;
+import org.primefaces.model.file.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 
-/**
- * User: mertcaliskan
- * Date: 9/5/12
- */
 @Named
 @ViewScoped
-public class FileBean implements Serializable {
+public class FileBean implements Serializable
+{
+  private UploadedFile file;
 
-    private UploadedFile file;
+  private UploadedFile file1;
+  private UploadedFile file2;
 
-    private UploadedFile file1;
-    private UploadedFile file2;
+  private final StreamedContent downloadFile;
 
-    private StreamedContent downloadFile;
+  public FileBean()
+  {
+    downloadFile = DefaultStreamedContent.builder()
+      .stream(() -> this.getClass().getResourceAsStream("/chapter7/PFSamplePDF.pdf"))
+      .build();
+  }
 
-    public FileBean() {
-        InputStream stream = this.getClass().getResourceAsStream("/chapter7/PFSamplePDF.pdf");
-        downloadFile = new DefaultStreamedContent(stream, "application/pdf", "PFSample.pdf");
-    }
+  public UploadedFile getFile()
+  {
+    return file;
+  }
 
-    public UploadedFile getFile() {
-        return file;
-    }
+  public void setFile(UploadedFile file)
+  {
+    this.file = file;
+  }
 
-    public void setFile(UploadedFile file) {
-        this.file = file;
-    }
+  public UploadedFile getFile1()
+  {
+    return file1;
+  }
 
-    public UploadedFile getFile1() {
-        return file1;
-    }
+  public void setFile1(UploadedFile file1)
+  {
+    this.file1 = file1;
+  }
 
-    public void setFile1(UploadedFile file1) {
-        this.file1 = file1;
-    }
+  public UploadedFile getFile2()
+  {
+    return file2;
+  }
 
-    public UploadedFile getFile2() {
-        return file2;
-    }
+  public void setFile2(UploadedFile file2)
+  {
+    this.file2 = file2;
+  }
 
-    public void setFile2(UploadedFile file2) {
-        this.file2 = file2;
-    }
+  public void handleFileUpload(FileUploadEvent event)
+  {
+    MessageUtil.addInfoMessage("upload.successful",
+      "%s is uploaded.".formatted(event.getFile().getFileName()));
+  }
 
-    public void handleFileUpload(FileUploadEvent event) {
-        UploadedFile file = event.getFile();
-        MessageUtil.addInfoMessage("upload.successful", file.getFileName() + " is uploaded.");
-    }
-
-    public StreamedContent getDownloadFile() {
-        return downloadFile;
-    }
+  public StreamedContent getDownloadFile()
+  {
+    return downloadFile;
+  }
 }

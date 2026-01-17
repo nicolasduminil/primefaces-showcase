@@ -1,29 +1,26 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter7;
 
-import fr.simplex_software.workshop.primefaces_showcaseconverter.CarConverter;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import fr.simplex_software.workshop.primefaces_showcase.converter.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-/**
- * Created by mertcaliskan
- * on 25/01/15.
- */
 @Named
 @ViewScoped
-public class ContentFlowBean implements Serializable {
+public class ContentFlowBean implements Serializable
+{
+  public List<Car> getCars()
+  {
+    return new ArrayList<>(CarConverter.cars.values());
+  }
 
-    public List<Car> getCars() {
-        return new ArrayList<Car>(CarConverter.cars.values());
-    }
-
-    public String showMessage() {
-        MessageUtil.addInfoMessage("car.selected");
-        return null;
-    }
+  public String showMessage()
+  {
+    MessageUtil.addInfoMessage("car.selected");
+    return null;
+  }
 }

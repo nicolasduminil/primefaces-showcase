@@ -1,85 +1,91 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter6;
 
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.event.ActionEvent;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import jakarta.faces.application.*;
+import jakarta.faces.context.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-/**
- * MenubarBean
- *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
+import java.io.*;
+
 @Named
 @ViewScoped
-public class MenubarBean implements Serializable {
+public class MenubarBean implements Serializable
+{
+  public void createFolder()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Create Folder", null));
+  }
 
-	public void createFolder(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Create Folder", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void createVideo()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Create Video File", null));
+  }
 
-	public void createVideo(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Create Video File", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void createHTML()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Create HTML File", null));
+  }
 
-	public void createHTML(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Create HTML File", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void properties()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Properties", null));
+  }
 
-	public void properties(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Properties", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void cut()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Cut", null));
+  }
 
-	public void cut(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cut", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void copy()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Copy", null));
+  }
 
-	public void copy(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Copy", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void paste()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Paste", null));
+  }
 
-	public void paste(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Paste", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void zoomIn()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Zoom In", null));
+  }
 
-	public void zoomIn(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Zoom In", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void zoomOut()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Zoom Out", null));
+  }
 
-	public void zoomOut(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Zoom Out", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void viewIcons()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "View Icons", null));
+  }
 
-	public void viewIcons(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "View Icons", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void viewCompact()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "View Compact", null));
+  }
 
-	public void viewCompact(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "View Compact", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+  public void viewDetails()
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "View Details", null));
+  }
 
-	public void viewDetails(ActionEvent ae) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "View Details", null);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
-	public String info() {
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("helpVisible", true);
-
-		return "/views/chapter6/menubar.xhtml";
-	}
+  public String info()
+  {
+    FacesContext.getCurrentInstance().getExternalContext().getFlash().put("helpVisible", true);
+    return "/views/chapter6/menubar.xhtml";
+  }
 }

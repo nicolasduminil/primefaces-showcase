@@ -1,83 +1,96 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter7;
 
-import org.primefaces.model.CroppedImage;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
+import jakarta.enterprise.context.*;
+import jakarta.inject.*;
+import org.primefaces.model.*;
 
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 
-/**
- * User: mertcaliskan
- * Date: 9/5/12
- */
 @Named
 @SessionScoped
-public class ImageCropBean implements Serializable {
+public class ImageCropBean implements Serializable
+{
+  private CroppedImage croppedImageSimple;
+  private CroppedImage croppedImageCoordinates;
+  private CroppedImage croppedImageAspectRatio;
+  private CroppedImage croppedImageMinMaxSize;
 
-    private CroppedImage croppedImageSimple;
-    private CroppedImage croppedImageCoordinates;
-    private CroppedImage croppedImageAspectRatio;
-    private CroppedImage croppedImageMinMaxSize;
+  private StreamedContent graphicText;
 
-    private StreamedContent graphicText;
+  public String cropSimple()
+  {
+    graphicText = DefaultStreamedContent.builder()
+      .stream(() -> new ByteArrayInputStream(croppedImageSimple.getBytes()))
+      .build();
+    return null;
+  }
 
-    public String cropSimple() throws IOException {
-        graphicText = new DefaultStreamedContent(new ByteArrayInputStream(croppedImageSimple.getBytes()));
-        return null;
-    }
+  public String cropCoordinates()
+  {
+    graphicText = DefaultStreamedContent.builder()
+      .stream(() -> new ByteArrayInputStream(croppedImageCoordinates.getBytes()))
+      .build();
+    return null;
+  }
 
-    public String cropCoordinates() throws IOException {
-        graphicText = new DefaultStreamedContent(new ByteArrayInputStream(croppedImageCoordinates.getBytes()));
-        return null;
-    }
+  public String cropAspectRatio()
+  {
+    graphicText = DefaultStreamedContent.builder()
+      .stream(() -> new ByteArrayInputStream(croppedImageAspectRatio.getBytes()))
+      .build();
+    return null;
+  }
 
-    public String cropAspectRatio() throws IOException {
-        graphicText = new DefaultStreamedContent(new ByteArrayInputStream(croppedImageAspectRatio.getBytes()));
-        return null;
-    }
+  public String cropMinMaxSize()
+  {
+    graphicText = DefaultStreamedContent.builder()
+      .stream(() -> new ByteArrayInputStream(croppedImageMinMaxSize.getBytes()))
+      .build();
+    return null;
+  }
 
-    public String cropMinMaxSize() throws IOException {
-        graphicText = new DefaultStreamedContent(new ByteArrayInputStream(croppedImageMinMaxSize.getBytes()));
-        return null;
-    }
+  public StreamedContent getGraphicText()
+  {
+    return graphicText;
+  }
 
-    public StreamedContent getGraphicText() {
-        return graphicText;
-    }
+  public CroppedImage getCroppedImageSimple()
+  {
+    return croppedImageSimple;
+  }
 
-    public CroppedImage getCroppedImageSimple() {
-        return croppedImageSimple;
-    }
+  public void setCroppedImageSimple(CroppedImage croppedImageSimple)
+  {
+    this.croppedImageSimple = croppedImageSimple;
+  }
 
-    public void setCroppedImageSimple(CroppedImage croppedImageSimple) {
-        this.croppedImageSimple = croppedImageSimple;
-    }
+  public CroppedImage getCroppedImageCoordinates()
+  {
+    return croppedImageCoordinates;
+  }
 
-    public CroppedImage getCroppedImageCoordinates() {
-        return croppedImageCoordinates;
-    }
+  public void setCroppedImageCoordinates(CroppedImage croppedImageCoordinates)
+  {
+    this.croppedImageCoordinates = croppedImageCoordinates;
+  }
 
-    public void setCroppedImageCoordinates(CroppedImage croppedImageCoordinates) {
-        this.croppedImageCoordinates = croppedImageCoordinates;
-    }
+  public CroppedImage getCroppedImageAspectRatio()
+  {
+    return croppedImageAspectRatio;
+  }
 
-    public CroppedImage getCroppedImageAspectRatio() {
-        return croppedImageAspectRatio;
-    }
+  public void setCroppedImageAspectRatio(CroppedImage croppedImageAspectRatio)
+  {
+    this.croppedImageAspectRatio = croppedImageAspectRatio;
+  }
 
-    public void setCroppedImageAspectRatio(CroppedImage croppedImageAspectRatio) {
-        this.croppedImageAspectRatio = croppedImageAspectRatio;
-    }
+  public CroppedImage getCroppedImageMinMaxSize()
+  {
+    return croppedImageMinMaxSize;
+  }
 
-    public CroppedImage getCroppedImageMinMaxSize() {
-        return croppedImageMinMaxSize;
-    }
-
-    public void setCroppedImageMinMaxSize(CroppedImage croppedImageMinMaxSize) {
-        this.croppedImageMinMaxSize = croppedImageMinMaxSize;
-    }
+  public void setCroppedImageMinMaxSize(CroppedImage croppedImageMinMaxSize)
+  {
+    this.croppedImageMinMaxSize = croppedImageMinMaxSize;
+  }
 }

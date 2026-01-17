@@ -1,32 +1,31 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter3;
 
-import org.primefaces.component.layout.LayoutUnit;
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import jakarta.faces.event.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import java.io.*;
 
-/**
- * Created by mertcaliskan
- * on 03/01/15.
- */
 @Named
 @ViewScoped
-public class InplaceBean implements Serializable {
-    private boolean value;
+public class InplaceBean implements Serializable
+{
+  private boolean value;
 
-    public boolean isValue() {
-        return value;
-    }
+  public boolean isValue()
+  {
+    return value;
+  }
 
-    public void setValue(boolean value) {
-        this.value = value;
-    }
+  public void setValue(boolean value)
+  {
+    this.value = value;
+  }
 
-    public void handleSave(AjaxBehaviorEvent event) {
-        MessageUtil.addInfoMessageWithoutKey("Input Saved!", null);
-    }
+  public void handleSave(AjaxBehaviorEvent event)
+  {
+    MessageUtil.addInfoMessageWithoutKey("Input Saved!", null);
+  }
 }
 

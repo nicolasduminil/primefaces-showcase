@@ -1,9 +1,4 @@
-package fr.simplex_software.workshop.primefaces_showcaseconverter;
-
-/**
- * User: mertcaliskan
- * Date: 7/9/12
- */
+package fr.simplex_software.workshop.primefaces_showcase.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
@@ -12,38 +7,30 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
-import java.util.HashMap;
-import java.util.Map;
 
-@FacesConverter(value = "fr.simplex_software.workshop.primefaces_showcaseconverter.CarConverter")
-public class CarConverter implements Converter {
+import java.util.*;
 
-    public static Map<String, Car> cars = new HashMap<String, Car>();
+@FacesConverter(value = "fr.simplex_software.workshop.primefaces_showcase.converter.CarConverter")
+public class CarConverter implements Converter
+{
 
-    static {
-        cars.put("CC", new Car("CC", 2008));
-        cars.put("Golf", new Car("Golf", 1974));
-        cars.put("Jetta", new Car("Jetta", 1979));
-        cars.put("Passat", new Car("Passat", 1973));
-        cars.put("Polo", new Car("Polo", 1975));
-        cars.put("Scirocco", new Car("Scirocco", 1974));
-        cars.put("Touareg", new Car("Touareg", 2002));
-    }
-    
-    public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        else {
-            return cars.get(value);
-        }
-    }
+  public static Map<String, Car> cars = Map.of(
+    "CC", new Car("CC", 2008),
+    "Golf", new Car("Golf", 1974),
+    "Jetta", new Car("Jetta", 1979),
+    "Passat", new Car("Passat", 1973),
+    "Polo", new Car("Polo", 1975),
+    "Scirocco", new Car("Scirocco", 1974),
+    "Touareg", new Car("Touareg", 2002)
+  );
 
-    public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
-        if (value == null || value.equals("")) {
-            return "";
-        } else {
-            return String.valueOf(((Car) value).getName());
-        }
-    }
+  public Object getAsObject(final FacesContext fc, final UIComponent component, final String value)
+  {
+    return StringUtils.isBlank(value) ? null : cars.get(value);
+  }
+
+  public String getAsString(final FacesContext fc, final UIComponent component, final Object value)
+  {
+    return value == null ? "" : ((Car) value).getName();
+  }
 }

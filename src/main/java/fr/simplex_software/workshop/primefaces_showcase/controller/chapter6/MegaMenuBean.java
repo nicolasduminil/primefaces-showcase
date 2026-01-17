@@ -1,20 +1,16 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter6;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-/**
- * MegaMenuBean
- *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
+import java.io.*;
+
 @Named
 @ViewScoped
-public class MegaMenuBean implements Serializable {
-
-	public String getItems() {
-		return "Bought items: ...";
-	}
+public class MegaMenuBean implements Serializable
+{
+  public String getItems()
+  {
+    return "Bought items: ...";
+  }
 }

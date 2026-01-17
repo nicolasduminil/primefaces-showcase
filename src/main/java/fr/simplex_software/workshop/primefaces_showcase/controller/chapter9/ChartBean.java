@@ -1,13 +1,15 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter9;
 
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
-import org.primefaces.event.ItemSelectEvent;
-import org.primefaces.model.chart.*;
+import jakarta.annotation.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import software.xdev.chartjs.model.charts.*;
+import software.xdev.chartjs.model.data.*;
+import software.xdev.chartjs.model.dataset.*;
+import software.xdev.chartjs.model.options.*;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import java.io.*;
+import java.util.*;
 
 /**
  * User: mertcaliskan
@@ -15,162 +17,196 @@ import java.io.Serializable;
  */
 @Named
 @ViewScoped
-public class ChartBean implements Serializable {
+public class ChartBean implements Serializable
+{
+  private Chart lineModel;
+  private Chart areaModel;
+  private Chart barModel;
+  private Chart pieModel;
+  private Chart liveChartModel;
+  private Chart combinedModel;
 
-    private LineChartModel lineModel;
-    private LineChartModel areaModel;
-    private BarChartModel barModel;
-    private PieChartModel pieModel;
-    private PieChartModel liveChartModel;
-    private CartesianChartModel combinedModel;
+  @PostConstruct
+  public void setup()
+  {
+    lineModel = createLineModel();
+    areaModel = createAreaModel();
+    barModel = createBarModel();
+    pieModel = createPieChartModel();
+  }
 
-    @PostConstruct
-    public void setup() {
-        lineModel = createLineModel();
-        areaModel = createAreaModel();
-        barModel = createBarModel();
-        pieModel = createPieChartModel();
-        liveChartModel = new PieChartModel();
-        combinedModel = new BarChartModel();
-    }
+  private Chart createBarModel()
+  {
+    BarDataset sales = new BarDataset()
+      .setLabel("Sales")
+      .setData(List.of(1000, 1170, 660, 1030))
+      .setBackgroundColor("#42A5F5");
 
-    private LineChartModel createLineModel() {
-        LineChartModel model = new LineChartModel();
-        LineChartSeries sales = new LineChartSeries();
-        sales.setLabel("Sales");
-        sales.set(2004, 1000);
-        sales.set(2005, 1170);
-        sales.set(2006, 660);
-        sales.set(2007, 1030);
+    BarData data = new BarData()
+      .addDataset(sales)
+      .addLabels("2004", "2005", "2006", "2007");
 
-        LineChartSeries expenses = new LineChartSeries();
-        expenses.setLabel("Expenses");
-        expenses.set(2004, 400);
-        expenses.set(2005, 460);
-        expenses.set(2006, 1120);
-        expenses.set(2007, 540);
+    BarOptions options = new BarOptions()
+      .setPlugins(new Plugins()
+        .setTitle(new Title().setText("Company Performance").setDisplay(true)));
 
-        model.addSeries(sales);
-        model.addSeries(expenses);
-        model.setExtender("chart");
-        model.setTitle("Company Performance");
+    return new BarChart().setData(data).setOptions(options);
+  }
 
-        return model;
-    }
+  private Chart createAreaModel()
+  {
+    LineDataset dataset = new LineDataset()
+      .setLabel("Expenses")
+      .setData(List.of(400, 460, 1120, 540))
+      .setFill(true)
+      .setBackgroundColor("rgba(255, 167, 38, 0.5)")
+      .setBorderColor("#FFA726");
 
-    private LineChartModel createAreaModel() {
-        LineChartModel model = new LineChartModel();
-        LineChartSeries sales = new LineChartSeries();
-        sales.setFill(true);
-        sales.setLabel("Sales");
-        sales.set(2004, 1000);
-        sales.set(2005, 1170);
-        sales.set(2006, 660);
-        sales.set(2007, 1030);
+    LineData data = new LineData()
+      .addDataset(dataset)
+      .addLabels("2004", "2005", "2006", "2007");
 
-        LineChartSeries expenses = new LineChartSeries();
-        expenses.setFill(true);
-        expenses.setLabel("Expenses");
-        expenses.set(2004, 400);
-        expenses.set(2005, 460);
-        expenses.set(2006, 1120);
-        expenses.set(2007, 540);
+    return new LineChart().setData(data);
+  }
 
-        model.addSeries(sales);
-        model.addSeries(expenses);
-        model.setExtender("chart");
-        model.setTitle("Company Performance");
 
-        return model;
-    }
+  private Chart createPieChartModel()
+  {
+    PieDataset dataset = new PieDataset()
+      .addData(11)
+      .addData(2)
+      .addData(2)
+      .addData(2)
+      .addData(7);
 
-    private BarChartModel createBarModel() {
-        BarChartModel model = new BarChartModel();
-        ChartSeries sales = new ChartSeries();
-        sales.setLabel("Sales");
-        sales.set(2004, 1000);
-        sales.set(2005, 1170);
-        sales.set(2006, 660);
-        sales.set(2007, 1030);
+    PieData data = new PieData()
+      .addDataset(dataset)
+      .addLabels("Work", "Eat", "Commute", "Watch TV", "Sleep");
 
-        ChartSeries expenses = new ChartSeries();
-        expenses.setLabel("Expenses");
-        expenses.set("2004", 400);
-        expenses.set("2005", 460);
-        expenses.set("2006", 1120);
-        expenses.set("2007", 540);
+    PieOptions options = new PieOptions()
+      .setPlugins(new Plugins()
+        .setLegend(new LegendOptions()
+          .setPosition("left")));
 
-        model.addSeries(sales);
-        model.addSeries(expenses);
-        model.setTitle("Company Performance");
+    return new PieChart()
+      .setData(data)
+      .setOptions(options);
+  }
 
-        return model;
-    }
+  private Chart createLineModel()
+  {
+    LineDataset sales = new LineDataset()
+      .setLabel("Sales")
+      .setData(List.of(1000.0, 1170.0, 660.0, 1030.0))
+      .setFill(false)
+      .setBorderColor("#42A5F5")
+      .setTension(0.1); // Optional: smooths the line
 
-    private PieChartModel createPieChartModel() {
-        PieChartModel model = new PieChartModel();
-        model.setLegendPosition("w");
-        model.setShowDataLabels(true);
-        model.set("Work", 11);
-        model.set("Eat", 2);
-        model.set("Commute", 2);
-        model.set("Watch TV", 2);
-        model.set("Sleep", 7);
+    LineDataset expenses = new LineDataset()
+      .setLabel("Expenses")
+      .setData(List.of(400.0, 460.0, 1120.0, 540.0))
+      .setFill(false)
+      .setBorderColor("#FFA726")
+      .setTension(0.1);
 
-        return model;
-    }
+    LineData data = new LineData()
+      .addDataset(sales)
+      .addDataset(expenses)
+      .addLabels("2004", "2005", "2006", "2007");
 
-    public PieChartModel getLivePieModel() {
-        int random1 = (int)(Math.random() * 1000);
-        int random2 = (int)(Math.random() * 1000);
+    LineOptions options = new LineOptions()
+      .setPlugins(new Plugins()
+        .setTitle(new Title().setText("Company Performance").setDisplay(true)));
 
-        liveChartModel.getData().put("Candidate 1", random1);
-        liveChartModel.getData().put("Candidate 2", random2);
-        liveChartModel.setLegendPosition("w");
-        liveChartModel.setShowDataLabels(true);
+    return new LineChart()
+      .setData(data)
+      .setOptions(options);
+  }
 
-        return liveChartModel;
-    }
+  public String getLivePieModel()
+  {
+    int random1 = (int) (Math.random() * 1000);
+    int random2 = (int) (Math.random() * 1000);
 
-    public CartesianChartModel getCombinedModel() {
-        LineChartSeries sales = new LineChartSeries();
-        sales.setLabel("Sales");
-        sales.set(2004, 1000);
-        sales.set(2005, 1170);
-        sales.set(2006, 660);
-        sales.set(2007, 1030);
+    PieDataset dataset = new PieDataset()
+      .setData(List.of((double) random1, (double) random2))
+      .setBackgroundColor(List.of("#FF6384", "#36A2EB"));
 
-        BarChartSeries expenses = new BarChartSeries();
-        expenses.setLabel("Expenses");
-        expenses.set("2004", 400);
-        expenses.set("2005", 460);
-        expenses.set("2006", 1120);
-        expenses.set("2007", 540);
+    PieData data = new PieData()
+      .addDataset(dataset)
+      .addLabels("Candidate 1", "Candidate 2");
 
-        combinedModel.addSeries(sales);
-        combinedModel.addSeries(expenses);
+    PieOptions options = new PieOptions()
+      .setPlugins(new Plugins()
+        .setLegend(new LegendOptions().setPosition("left").setDisplay(true)));
 
-        return combinedModel;
-    }
+    Chart liveChartModel = new PieChart()
+      .setData(data)
+      .setOptions(options);
 
-    public void itemSelect(ItemSelectEvent event) {
-        MessageUtil.addInfoMessageWithoutKey("Item selected",
-                "Item Index:" + event.getItemIndex() + ", Series Index: " + event.getSeriesIndex());
-    }
+    return liveChartModel.toJson();
+  }
 
-    public LineChartModel getAreaModel() {
-        return areaModel;
-    }
+  public String getCombinedModel()
+  {
+    LineDataset sales = new LineDataset()
+      .setLabel("Sales")
+      .setData(List.of(1000.0, 1170.0, 660.0, 1030.0))
+      .setBorderColor("#42A5F5")
+      .setFill(false);
 
-    public LineChartModel getLineModel() {
-        return lineModel;
-    }
+    BarDataset expenses = new BarDataset()
+      .setLabel("Expenses")
+      .setData(List.of(400.0, 460.0, 1120.0, 540.0))
+      .setBackgroundColor("#FFA726");
 
-    public BarChartModel getBarModel() {
-        return barModel;
-    }
+    BarData data = new BarData()
+      .addLabels("2004", "2005", "2006", "2007");
 
-    public PieChartModel getPieModel() {
-        return pieModel;
-    }
+    ((List) data.getDatasets()).add(sales);
+    data.addDataset(expenses);
+
+    BarChart combinedChart = new BarChart()
+      .setData(data)
+      .setOptions(new BarOptions()
+        .setPlugins(new Plugins()
+          .setTitle(new Title().setText("Combined Sales & Expenses").setDisplay(true))));
+
+    return combinedChart.toJson();
+  }
+
+  public Chart getPieModel()
+  {
+    return pieModel;
+  }
+
+  public Chart getLineModel()
+  {
+    return lineModel;
+  }
+
+  public Chart getAreaModel()
+  {
+    return areaModel;
+  }
+
+  public Chart getBarModel()
+  {
+    return barModel;
+  }
+
+  public Chart getLiveChartModel()
+  {
+    return liveChartModel;
+  }
+
+  public void setLiveChartModel(Chart liveChartModel)
+  {
+    this.liveChartModel = liveChartModel;
+  }
+
+  public void setCombinedModel(Chart combinedModel)
+  {
+    this.combinedModel = combinedModel;
+  }
 }

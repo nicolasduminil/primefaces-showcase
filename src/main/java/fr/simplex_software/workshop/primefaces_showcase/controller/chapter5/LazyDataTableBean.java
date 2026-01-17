@@ -1,40 +1,34 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter5;
 
-import fr.simplex_software.workshop.primefaces_showcaseconverter.CarConverter;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.LazyCarDataModel;
-import org.primefaces.model.LazyDataModel;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.*;
+import fr.simplex_software.workshop.primefaces_showcase.converter.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.model.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
 
-/**
- * User: mertcaliskan
- * Date: 9/2/12
- */
 @Named
 @ViewScoped
-public class LazyDataTableBean implements Serializable {
+public class LazyDataTableBean implements Serializable
+{
+  private List<Car> cars;
 
-    private List<Car> cars;
+  private LazyDataModel<Car> lazyModel;
 
-    private LazyDataModel<Car> lazyModel;
+  public LazyDataTableBean()
+  {
+    this.cars = IntStream.range(0, 1000)
+      .boxed()
+      .flatMap(i -> CarConverter.cars.values().stream()).toList();
+    this.lazyModel = new LazyCarDataModel(this.cars);
+  }
 
-    public LazyDataTableBean() {
-        Collection<Car> cars = CarConverter.cars.values();
-        Collection<Car> bulkCars = new ArrayList<Car>();
-        for (int i = 0; i< 1000; i++) {
-            bulkCars.addAll(cars);
-        }
-        this.cars = new ArrayList<Car>(bulkCars);
-        lazyModel = new LazyCarDataModel(this.cars);
-    }
-
-    public LazyDataModel<Car> getLazyModel() {
-        return lazyModel;
-    }
+  public LazyDataModel<Car> getLazyModel()
+  {
+    return lazyModel;
+  }
 }

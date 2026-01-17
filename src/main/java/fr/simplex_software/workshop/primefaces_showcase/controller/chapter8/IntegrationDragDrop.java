@@ -1,66 +1,55 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter8;
 
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter8.Document;
-import org.primefaces.event.DragDropEvent;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter8.*;
+import jakarta.annotation.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.event.*;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Random;
+import java.io.*;
+import java.time.*;
+import java.util.*;
 
-/**
- * IntegrationDragDrop
- *
- * @author Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
 @Named
 @ViewScoped
-public class IntegrationDragDrop implements Serializable {
+public class IntegrationDragDrop implements Serializable
+{
+  private final List<Document> availableDocs = new ArrayList<>(List.of (
+    new Document("Perl script", 120, "Sara Schmidt", getCreationDate(), "perl"),
+    new Document("Alex's master thesis", 850, "Alex Konradi", getCreationDate(), "dvi"),
+    new Document("jQuery presentation", 687, "Jasper Morgan", getCreationDate(), "ppt"),
+    new Document("Russian songs", 1020, "Urmel Night", getCreationDate(), "mid"),
+    new Document("German songs", 2268, "Nicole Konradi", getCreationDate(), "mp3"),
+    new Document("Cool flash multimedia", 2268, "John Wiese", getCreationDate(), "swf"),
+    new Document("Windows custom sound", 84, "Sebastian Schwarz", getCreationDate(), "wav"),
+    new Document("Currency exchange table", 1400, "Nadja Swift", getCreationDate(), "xls"),
+    new Document("Search masks configuration", 33, "Andrew Andreev", getCreationDate(), "xml")
+  ));
+  private final List<Document> deletedDocs = new ArrayList<>();
 
-    private List<Document> availableDocs = new ArrayList<Document>();
-    private List<Document> deletedDocs = new ArrayList<Document>();
+   public List<Document> getAvailableDocs()
+  {
+    return availableDocs;
+  }
 
-    @PostConstruct
-    public void initialize() {
-        availableDocs.add(new Document("Perl script", 120, "Sara Schmidt", getCreationDate(), "perl"));
-        availableDocs.add(new Document("Alex's master thesis", 850, "Alex Konradi", getCreationDate(), "dvi"));
-        availableDocs.add(new Document("jQuery presentation", 687, "Jasper Morgan", getCreationDate(), "ppt"));
-        availableDocs.add(new Document("Russian songs", 1020, "Urmel Night", getCreationDate(), "mid"));
-        availableDocs.add(new Document("German songs", 2268, "Nicole Konradi", getCreationDate(), "mp3"));
-        availableDocs.add(new Document("Cool flash multimedia", 2268, "John Wiese", getCreationDate(), "swf"));
-        availableDocs.add(new Document("Windows custom sound", 84, "Sebastian Schwarz", getCreationDate(), "wav"));
-        availableDocs.add(new Document("Currency exchange table", 1400, "Nadja Swift", getCreationDate(), "xls"));
-        availableDocs.add(new Document("Search masks configuration", 33, "Andrew Andreev", getCreationDate(), "xml"));
-    }
+  public List<Document> getDeletedDocs()
+  {
+    return deletedDocs;
+  }
 
-    public List<Document> getAvailableDocs() {
-        return availableDocs;
-    }
+  public void onDocumentDrop(DragDropEvent<Document> ddEvent)
+  {
+    Document doc = ddEvent.getData();
+    deletedDocs.add(doc);
+    availableDocs.remove(doc);
+  }
 
-    public List<Document> getDeletedDocs() {
-        return deletedDocs;
-    }
-
-    public void onDocumentDrop(DragDropEvent ddEvent) {
-        Document doc = (Document) ddEvent.getData();
-        deletedDocs.add(doc);
-        availableDocs.remove(doc);
-    }
-
-    private Date getCreationDate() {
-        Random random = new Random();
-        int day = random.nextInt(30);
-        int month = random.nextInt(Calendar.DECEMBER + 1);
-        int year = 2014;
-        GregorianCalendar calendar = new GregorianCalendar(year, month, day);
-
-        return calendar.getTime();
-    }
+  private Date getCreationDate()
+  {
+    Random random = new Random();
+    int day = random.nextInt(1, 29);
+    int month = random.nextInt(1, 13);
+    LocalDate localDate = LocalDate.of(2026, month, day);
+    return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+  }
 }

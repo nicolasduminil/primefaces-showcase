@@ -1,196 +1,209 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter5;
 
-import org.primefaces.component.datatable.DataTable;
-import fr.simplex_software.workshop.primefaces_showcaseconverter.CarConverter;
-import fr.simplex_software.workshop.primefaces_showcaseconverter.DetailedCarConverter;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.Boxer;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.CarDataModel;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.DetailedCar;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.Stat;
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
+import fr.simplex_software.workshop.primefaces_showcase.converter.*;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.*;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import fr.simplex_software.workshop.primefaces_showcase.converter.*;
+import jakarta.annotation.*;
+import jakarta.faces.event.*;
+import jakarta.faces.model.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.component.datatable.*;
 import org.primefaces.event.*;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.event.AjaxBehaviorEvent;
-import jakarta.faces.event.ComponentSystemEvent;
-import jakarta.faces.model.SelectItem;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
 
-/**
- * User: mertcaliskan
- * Date: 8/8/12
- */
 @Named
 @ViewScoped
-public class DataTableBean implements Serializable {
+public class DataTableBean implements Serializable
+{
+  private List<Car> cars = new ArrayList<Car>(CarConverter.cars.values());
+  private List<DetailedCar> detailedCars = new ArrayList<DetailedCar>(DetailedCarConverter.cars.values());
+  private Car selectedCar;
+  private Car[] selectedCars;
+  private SelectItem[] carNamesOptions;
+  private List<Car> filteredValues;
+  private CarDataModel carDataModel = new CarDataModel(cars);
+  private List<Boxer> boxers;
 
-    private List<Car> cars;
-    private List<DetailedCar> detailedCars;
-    private Car selectedCar;
-    private Car[] selectedCars;
-    private SelectItem[] carNamesOptions;
-    private List<Car> filteredValues;
-    private CarDataModel carDataModel;
-    private List<Boxer> boxers;
+  @PostConstruct
+  public void setup()
+  {
+    boxers = List.of(
+      createBoxer("Muhammad Ali", List.of(
+        new Stat("2005-2006", 7, 5),
+        new Stat("2006-2007", 10, 5),
+        new Stat("2007-2008", 3, 8),
+        new Stat("2008-2009", 10, 4),
+        new Stat("2009-2010", 10, 5),
+        new Stat("2010-2011", 3, 10)
+      )),
+      createBoxer("George Foreman", List.of(
+        new Stat("2005-2006", 4, 10),
+        new Stat("2006-2007", 6, 8),
+        new Stat("2007-2008", 10, 5),
+        new Stat("2008-2009", 7, 6),
+        new Stat("2009-2010", 10, 8),
+        new Stat("2010-2011", 7, 4)
+      ))
+    );
+  }
 
-    @PostConstruct
-    public void setup() {
-        cars = new ArrayList<Car>(CarConverter.cars.values());
-        detailedCars = new ArrayList<DetailedCar>(DetailedCarConverter.cars.values());
+  public void onResize(ColumnResizeEvent event)
+  {
+    MessageUtil.addInfoMessage("column.resized", "W: %d - H: %d"
+      .formatted(event.getWidth(), event.getHeight()));
+  }
 
-        carDataModel = new CarDataModel(cars);
-        
-        initBoxers();
-    }
+  public void onRowReorder(ReorderEvent event)
+  {
+    MessageUtil.addInfoMessage("row.reordered", "From: %d - To: %d"
+      .formatted(event.getFromIndex(), event.getToIndex()));
+  }
 
-    private void initBoxers() {
-        boxers = new ArrayList<Boxer>();
-        Boxer muhammadAli = new Boxer("Muhammad Ali");
-        muhammadAli.getStats().add(new Stat("2005-2006", 7, 5));
-        muhammadAli.getStats().add(new Stat("2006-2007", 10, 5));
-        muhammadAli.getStats().add(new Stat("2007-2008", 3, 8));
-        muhammadAli.getStats().add(new Stat("2008-2009", 10, 4));
-        muhammadAli.getStats().add(new Stat("2009-2010", 10, 5));
-        muhammadAli.getStats().add(new Stat("2010-2011", 3, 10));
-        boxers.add(muhammadAli);
+  public void onColReorder(AjaxBehaviorEvent event)
+  {
+    MessageUtil.addInfoMessage("col.reordered", "Component ID: %s".formatted(event.getComponent().getId()));
+  }
 
-        Boxer georgeForeman = new Boxer("George Foreman");
-        georgeForeman.getStats().add(new Stat("2005-2006", 4, 10));
-        georgeForeman.getStats().add(new Stat("2006-2007", 6, 8));
-        georgeForeman.getStats().add(new Stat("2007-2008", 10, 5));
-        georgeForeman.getStats().add(new Stat("2008-2009", 7, 6));
-        georgeForeman.getStats().add(new Stat("2009-2010", 10, 8));
-        georgeForeman.getStats().add(new Stat("2010-2011", 7, 4));
-        boxers.add(georgeForeman);
-    }
+  public void onColumnToggle(ToggleEvent e)
+  {
+    MessageUtil.addInfoMessage("col.toggled", "Visibility: %s".formatted(e.getVisibility()));
+  }
 
-    public void onResize(ColumnResizeEvent event) {
-        MessageUtil.addInfoMessage("column.resized", "W:" + event.getWidth() + " - H:" + event.getHeight());
-    }
+  public String[] getCarNames()
+  {
+    return CarConverter.cars.keySet().toArray(new String[0]);
+  }
 
-    public void onRowReorder(ReorderEvent event) {
-        MessageUtil.addInfoMessage("row.reordered", "From:" + event.getFromIndex() + " - To:" + event.getToIndex());
-    }
+  public SelectItem[] getCarNamesAsOptions()
+  {
+    return createFilterOptions(CarConverter.cars.keySet().toArray(new String[0]));
+  }
 
-    public void onColReorder(AjaxBehaviorEvent event) {
-        MessageUtil.addInfoMessage("col.reordered", "Component ID:" + event.getComponent().getId());
-    }
+  private SelectItem[] createFilterOptions(String[] data)
+  {
+    return IntStream.range(0, data.length)
+      .mapToObj(i -> new SelectItem(data[i], data[i]))
+      .toArray(SelectItem[]::new);
+  }
 
-    public void onColumnToggle(ToggleEvent e) {
-        MessageUtil.addInfoMessage("col.toggled", "Visibility:" + e.getVisibility());
-    }
+  public void selectCar(Car car)
+  {
+    this.selectedCar = car;
+  }
 
-    public String[] getCarNames() {
-        return CarConverter.cars.keySet().toArray(new String[0]);
-    }
+  public void onRowSelect(SelectEvent event)
+  {
+    MessageUtil.addInfoMessage("car.selected", ((Car) event.getObject()).getName());
+  }
 
-    public SelectItem[] getCarNamesAsOptions() {
-        carNamesOptions = createFilterOptions(CarConverter.cars.keySet().toArray(new String[0]));
-        return carNamesOptions;
-    }
+  public void onRowUnselect(UnselectEvent event)
+  {
+    MessageUtil.addInfoMessage("car.unselected", ((Car) event.getObject()).getName());
+  }
 
-    private SelectItem[] createFilterOptions(String[] data) {
-        SelectItem[] options = new SelectItem[data.length];
+  public void onEdit(RowEditEvent event)
+  {
+    MessageUtil.addInfoMessage("car.edit", ((Car) event.getObject()).getName());
+  }
 
-        for(int i = 0; i < data.length; i++) {
-            options[i] = new SelectItem(data[i], data[i]);
-        }
+  public void onCancel(RowEditEvent event)
+  {
+    MessageUtil.addInfoMessage("car.edit.cancelled", ((Car) event.getObject()).getName());
+  }
 
-        return options;
-    }
+  public void postSort(ComponentSystemEvent e)
+  {
+    ((DataTable) e.getComponent()).getSortByAsMap().keySet()
+      .forEach(key -> System.out.println(key));
+  }
 
-    public String selectCar(Car car) {
-        this.selectedCar = car;
-        return null;
-    }
+  public void postFilter(ComponentSystemEvent e)
+  {
+    Optional.ofNullable(((DataTable) e.getComponent()).getFilteredValue())
+      .map(val -> (List<Car>) val)
+      .ifPresent(list -> list.forEach(car -> System.out.println(car.getName())));
+  }
 
-    public void onRowSelect(SelectEvent event) {
-        MessageUtil.addInfoMessage("car.selected", ((Car) event.getObject()).getName());
-    }
+  public Car getSelectedCar()
+  {
+    return selectedCar;
+  }
 
-    public void onRowUnselect(UnselectEvent event) {
-        MessageUtil.addInfoMessage("car.unselected", ((Car) event.getObject()).getName());
-    }
+  public void setSelectedCar(Car selectedCar)
+  {
+    this.selectedCar = selectedCar;
+  }
 
-    public void onEdit(RowEditEvent event) {
-        MessageUtil.addInfoMessage("car.edit", ((Car) event.getObject()).getName());
-    }
+  public Car[] getSelectedCars()
+  {
+    return selectedCars;
+  }
 
-    public void onCancel(RowEditEvent event) {
-        MessageUtil.addInfoMessage("car.edit.cancelled", ((Car) event.getObject()).getName());
-    }
+  public void setSelectedCars(Car[] selectedCars)
+  {
+    this.selectedCars = selectedCars;
+  }
 
-    public void postSort(ComponentSystemEvent e) {
-        System.out.println(((DataTable) e.getComponent()).getSortColumn().getHeaderText());
-    }
+  public List<Car> getCars()
+  {
+    return cars;
+  }
 
-    public void postFilter(ComponentSystemEvent e) {
-        DataTable dt = (DataTable) e.getComponent();
-        for (Iterator it = dt.getFilteredValue().iterator(); it.hasNext();) {
-            Car car = (Car) it.next();
-            System.out.println(car.getName());
-        }
-    }
+  public void setCars(List<Car> cars)
+  {
+    this.cars = cars;
+  }
 
-    public Car getSelectedCar() {
-        return selectedCar;
-    }
+  public List<Car> getFilteredValues()
+  {
+    return filteredValues;
+  }
 
-    public void setSelectedCar(Car selectedCar) {
-        this.selectedCar = selectedCar;
-    }
+  public void setFilteredValues(List<Car> filteredValues)
+  {
+    this.filteredValues = filteredValues;
+  }
 
-    public Car[] getSelectedCars() {
-        return selectedCars;
-    }
+  public CarDataModel getCarDataModel()
+  {
+    return carDataModel;
+  }
 
-    public void setSelectedCars(Car[] selectedCars) {
-        this.selectedCars = selectedCars;
-    }
+  public void setCarDataModel(CarDataModel carDataModel)
+  {
+    this.carDataModel = carDataModel;
+  }
 
-    public List<Car> getCars() {
-        return cars;
-    }
+  public List<DetailedCar> getDetailedCars()
+  {
+    return detailedCars;
+  }
 
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
+  public void setDetailedCars(List<DetailedCar> detailedCars)
+  {
+    this.detailedCars = detailedCars;
+  }
 
-    public List<Car> getFilteredValues() {
-        return filteredValues;
-    }
+  public List<Boxer> getBoxers()
+  {
+    return boxers;
+  }
 
-    public void setFilteredValues(List<Car> filteredValues) {
-        this.filteredValues = filteredValues;
-    }
+  public void setBoxers(List<Boxer> boxers)
+  {
+    this.boxers = boxers;
+  }
 
-    public CarDataModel getCarDataModel() {
-        return carDataModel;
-    }
-
-    public void setCarDataModel(CarDataModel carDataModel) {
-        this.carDataModel = carDataModel;
-    }
-
-    public List<DetailedCar> getDetailedCars() {
-        return detailedCars;
-    }
-
-    public void setDetailedCars(List<DetailedCar> detailedCars) {
-        this.detailedCars = detailedCars;
-    }
-
-    public List<Boxer> getBoxers() {
-        return boxers;
-    }
-
-    public void setBoxers(List<Boxer> boxers) {
-        this.boxers = boxers;
-    }
+  private Boxer createBoxer(String name, List<Stat> stats)
+  {
+    Boxer b = new Boxer(name);
+    b.getStats().addAll(stats);
+    return b;
+  }
 }

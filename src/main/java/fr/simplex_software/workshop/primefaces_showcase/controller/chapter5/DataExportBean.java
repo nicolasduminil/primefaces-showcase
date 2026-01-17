@@ -1,40 +1,37 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter5;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.HeaderFooter;
-import com.lowagie.text.Phrase;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.CountryList;
+import com.lowagie.text.*;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 
-/**
- * User: mertcaliskan
- * Date: 8/28/12
- */
 @Named
 @ViewScoped
-public class DataExportBean implements Serializable {
+public class DataExportBean implements Serializable
+{
+  private String[] selectedCountries;
 
-    private String[] selectedCountries;
-    
-    public List<String> getCountries() {
-        return CountryList.countries;
-    }
+  public List<String> getCountries()
+  {
+    return CountryList.countries;
+  }
 
-    public void preProcessPDF(Object document) {
-        Document pdf = (Document) document;
-        HeaderFooter footer = new HeaderFooter(new Phrase("This is page: "), true);
-        pdf.setFooter(footer);
-    }
+  public void preProcessPDF(Object document)
+  {
+    ((Document) document)
+      .setFooter(new HeaderFooter(new Phrase("This is page: "), true));
+  }
 
-    public String[] getSelectedCountries() {
-        return selectedCountries;
-    }
+  public String[] getSelectedCountries()
+  {
+    return selectedCountries;
+  }
 
-    public void setSelectedCountries(String[] selectedCountries) {
-        this.selectedCountries = selectedCountries;
-    }
+  public void setSelectedCountries(String[] selectedCountries)
+  {
+    this.selectedCountries = selectedCountries;
+  }
 }

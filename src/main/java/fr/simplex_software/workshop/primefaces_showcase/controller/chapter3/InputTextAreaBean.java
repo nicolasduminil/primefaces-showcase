@@ -1,44 +1,34 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter3;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-/**
- * User: mertcaliskan
- * Date: 6/25/12
- */
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+
 @Named
 @ViewScoped
-public class InputTextAreaBean implements Serializable {
-    
-    private String value;
+public class InputTextAreaBean implements Serializable
+{
+  private String value;
 
-    public String getValue() {
-        return value;
-    }
+  public String getValue()
+  {
+    return value;
+  }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+  public void setValue(String value)
+  {
+    this.value = value;
+  }
 
-    public List<String> complete(String query) {
-        List<String> results = new ArrayList<String>();
-
-        if(query.equals("PrimeFaces")) {
-            results.add("PrimeFaces Rocks!!!");
-            results.add("PrimeFaces has 100+ components.");
-            results.add("PrimeFaces is lightweight.");
-            results.add("PrimeFaces Cookbook is the best source for PrimeFaces!");
-        }
-        else {
-            for(int i = 0; i < 10; i++) {
-                results.add(query + i);
-            }
-        }
-
-        return results;
-    }
+  public List<String> complete(String query)
+  {
+    return query.equals("PrimeFaces") ? List.of("PrimeFaces Rocks!!!",
+      "PrimeFaces has 100+ components.",
+      "PrimeFaces is lightweight.",
+      "PrimeFaces Cookbook is the best source for PrimeFaces !") :
+      IntStream.range(0, 10).mapToObj(i -> query + i).collect(Collectors.toList());
+  }
 }

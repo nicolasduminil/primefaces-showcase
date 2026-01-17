@@ -1,4 +1,4 @@
-package fr.simplex_software.workshop.primefaces_showcaseconverter;
+package fr.simplex_software.workshop.primefaces_showcase.converter;
 
 import fr.simplex_software.workshop.primefaces_showcase.controller.chapter2.UserSettingsBean;
 import fr.simplex_software.workshop.primefaces_showcase.model.chapter2.Theme;

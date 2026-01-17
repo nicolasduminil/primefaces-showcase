@@ -1,4 +1,4 @@
-package fr.simplex_software.workshop.primefaces_showcaseconverter;
+package fr.simplex_software.workshop.primefaces_showcase.converter;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

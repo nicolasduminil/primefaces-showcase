@@ -1,84 +1,89 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter5;
 
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
-import org.primefaces.event.ScheduleEntryMoveEvent;
-import org.primefaces.event.ScheduleEntryResizeEvent;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.LazyScheduleModel;
-import org.primefaces.model.ScheduleModel;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import jakarta.annotation.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.event.*;
+import org.primefaces.event.schedule.*;
+import org.primefaces.model.*;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
+import java.io.*;
+import java.time.*;
+import java.util.*;
+import java.util.stream.*;
 
-/**
- * ScheduleController
- *
- * User: mertcaliskan
- * Date: 3/18/15
- */
 @Named
 @ViewScoped
-public class ScheduleBean implements Serializable {
+public class ScheduleBean implements Serializable
+{
+  private ScheduleModel lazyEventModel;
 
-    private ScheduleModel lazyEventModel;
+  @PostConstruct
+  public void initialize()
+  {
+    lazyEventModel = new LazyScheduleModel()
+    {
+      @Override
+      public void loadEvents(LocalDateTime start, LocalDateTime end)
+      {
+        try
+        {
+          Thread.sleep(1500);
+        }
+        catch (Exception ignored)
+        {
+        }
 
-    @PostConstruct
-    public void initialize() {
-        lazyEventModel = new LazyScheduleModel() {
+        clear();
 
-            @Override
-            public void loadEvents(Date start, Date end) {
-                try {
-                    // simulate a long running task
-                    Thread.sleep(1500);
-                } catch (Exception e) {
-                }
+        IntStream.rangeClosed(1, 2).forEach(i ->
+        {
+          LocalDateTime random = getRandomDate(start);
+          addEvent(DefaultScheduleEvent.builder()
+            .title("Lazy Event " + i)
+            .startDate(random)
+            .endDate(random)
+            .build());
+        });
+      }
+    };
+  }
 
-                clear();
+  public ScheduleModel getLazyScheduleModel()
+  {
+    return lazyEventModel;
+  }
 
-                Date random = getRandomDate(start);
-                addEvent(new DefaultScheduleEvent("Lazy Event 1", random, random));
+  public LocalDateTime getRandomDate(LocalDateTime base)
+  {
+    return base.plusDays(new Random().nextInt(30) + 1);
+  }
 
-                random = getRandomDate(start);
-                addEvent(new DefaultScheduleEvent("Lazy Event 2", random, random));
-            }
-        };
-    }
 
-    public Date getRandomDate(Date base) {
-        Calendar date = Calendar.getInstance();
-        date.setTime(base);
-        date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1);
+  public void onDateSelect(SelectEvent<?> event)
+  {
+    MessageUtil.addInfoMessage("date.selected", event.getObject());
+  }
 
-        return date.getTime();
-    }
+  public void onEventSelect(SelectEvent<?> event)
+  {
+    MessageUtil.addInfoMessage("event.selected", ((DefaultScheduleEvent<?>) event.getObject()).getTitle());
+  }
 
-    public ScheduleModel getLazyScheduleModel() {
-        return lazyEventModel;
-    }
+  public void onEventMove(ScheduleEntryMoveEvent event)
+  {
+    MessageUtil.addInfoMessage("event.moved", event.getScheduleEvent().getTitle(), event.getDayDelta(), event.getMinuteDelta());
+  }
 
-    public void onDateSelect(SelectEvent event) {
-        MessageUtil.addInfoMessage("date.selected", event.getObject());
-    }
+  public void onEventResize(ScheduleEntryResizeEvent event)
+  {
+    MessageUtil.addInfoMessage("event.resized", event.getScheduleEvent().getTitle(),
+      event.getDayDeltaStart(), event.getMinuteDeltaStart());
+  }
 
-    public void onEventSelect(SelectEvent event) {
-        MessageUtil.addInfoMessage("event.selected", ((DefaultScheduleEvent)event.getObject()).getTitle());
-    }
-
-    public void onEventMove(ScheduleEntryMoveEvent event) {
-        MessageUtil.addInfoMessage("event.moved", event.getScheduleEvent().getTitle(), event.getDayDelta(), event.getMinuteDelta());
-    }
-
-    public void onEventResize(ScheduleEntryResizeEvent event) {
-        MessageUtil.addInfoMessage("event.resized", event.getScheduleEvent().getTitle(), event.getDayDelta(), event. getMinuteDelta());
-    }
-
-    public void onViewChange(SelectEvent event) {
-        MessageUtil.addInfoMessage("view.changed", event.getObject());
-    }
+  public void onViewChange(SelectEvent<?> event)
+  {
+    MessageUtil.addInfoMessage("view.changed", event.getObject());
+  }
 }

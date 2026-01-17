@@ -1,5 +1,6 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter2;
 
+import fr.simplex_software.workshop.primefaces_showcase.model.*;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -16,33 +17,33 @@ public class TreeBean implements Serializable
 
   public TreeBean()
   {
-    root = new DefaultTreeNode<>("Root", null);
+    root = new DefaultTreeNode<>(new BookTreeNode("root", null), null);
 
-    TreeNode<BookTreeNode> node0 = new DefaultTreeNode<>("Tree node 0", root);
-    node0.setExpanded(true);
+    TreeNode<BookTreeNode> n0 = createNode("Tree node 0", root, true);
+    TreeNode<BookTreeNode> n00 = createNode("Tree node 0.0", n0, true);
+    createNode("Tree node 0.0.0", n00, true);
+    createNode("Tree node 0.0.1", n00, false);
+    createNode("Tree node 0.1", n0, false);
+    createNode("Tree node 0.1.0", n0, false);
 
-    TreeNode<BookTreeNode> node1 = new DefaultTreeNode<>("Tree node 1", root);
-    new DefaultTreeNode<>("Tree node 2", root);
+    TreeNode<BookTreeNode> n1 = createNode("Tree node 1", root, false);
+    TreeNode<BookTreeNode> n10 = createNode("Tree node 1.0", n1, false);
+    createNode("Tree node 1.0.0", n10, false);
+    createNode("Tree node 1.1", n1, false);
 
-    TreeNode<BookTreeNode> node00 = new DefaultTreeNode<>("Tree node 0.0", node0);
-    node00.setExpanded(true);
-
-    TreeNode<BookTreeNode> node01 = new DefaultTreeNode<>("Tree node 0.1", node0);
-
-    TreeNode<BookTreeNode> node10 = new DefaultTreeNode<>("Tree node 1.0", node1);
-    new DefaultTreeNode<>("Tree node 1.1", node1);
-
-    TreeNode<BookTreeNode> node000 = new DefaultTreeNode<>("Tree node 0.0.0", node00);
-    node000.setExpanded(true);
-
-    new DefaultTreeNode<>("Tree node 0.0.1", node00);
-    new DefaultTreeNode<>("Tree node 0.1.0", node01);
-
-    new DefaultTreeNode<>("Tree node 1.0.0", node10);
+    createNode("Tree node 2", root, false);
   }
 
   public TreeNode<BookTreeNode> getRoot()
   {
     return root;
+  }
+
+  private TreeNode<BookTreeNode> createNode(String label, TreeNode<BookTreeNode> parent, boolean expanded)
+  {
+    TreeNode<BookTreeNode> node =
+      new DefaultTreeNode<>(new BookTreeNode(label, parent.getData().getView()), parent);
+    node.setExpanded(expanded);
+    return node;
   }
 }

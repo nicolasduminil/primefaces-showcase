@@ -1,94 +1,92 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter2;
 
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter2.Theme;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter2.*;
+import jakarta.annotation.*;
+import jakarta.enterprise.context.*;
+import jakarta.inject.*;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.beans.*;
+import java.io.*;
+import java.util.*;
 
-/**
- * UserSettingsBean
- *
- * @author Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
 @Named
 @SessionScoped
-public class UserSettingsBean implements Serializable {
+public class UserSettingsBean implements Serializable
+{
+  private final String[] THEMES =
+    {
+      "Afterdark",
+      "Afternoon",
+      "Afterwork",
+      "Aristo",
+      "Black-tie",
+      "Blitzer",
+      "Bluesky",
+      "Bootstrap",
+      "Casablanca",
+      "Cupertino",
+      "Cruze",
+      "Dark-hive",
+      "Delta",
+      "Dot-luv",
+      "Eggplant",
+      "Excite-bike",
+      "Flick",
+      "Glass-x",
+      "Home",
+      "Hot-sneaks",
+      "Humanity",
+      "Le-frog",
+      "Midnight",
+      "Mint-choc",
+      "Moodyblue2",
+      "Overcast",
+      "Pepper-grinder",
+      "Redmond",
+      "Rocket",
+      "Sam",
+      "Smoothness",
+      "South-street",
+      "Start",
+      "Sunny",
+      "Swanky-purse",
+      "Trontastic",
+      "Ui-darkness",
+      "Ui-lightness",
+      "Vader"
+    };
 
-    private Map<String, String> themes; // for stateless theme switcher
-    private List<Theme> availableThemes; // for stateful theme switcher
-    private Theme theme; // selected theme
+  private Map<String, String> themes = new TreeMap<>();
+  private List<Theme> availableThemes = new ArrayList<Theme>();
+  private Theme theme;
 
-    public Map<String, String> getThemes() {
-        return themes;
-    }
+  public Map<String, String> getThemes()
+  {
+    return themes;
+  }
 
-    public List<Theme> getAvailableThemes() {
-        return availableThemes;
-    }
+  public List<Theme> getAvailableThemes()
+  {
+    return availableThemes;
+  }
 
-    public Theme getTheme() {
-        return theme;
-    }
+  public Theme getTheme()
+  {
+    return theme;
+  }
 
-    public void setTheme(Theme theme) {
-        this.theme = theme;
-    }
+  public void setTheme(Theme theme)
+  {
+    this.theme = theme;
+  }
 
-    @PostConstruct
-    public void init() {
-        themes = new TreeMap<String, String>();
-        themes.put("Afterdark", "afterdark");
-        themes.put("Afternoon", "afternoon");
-        themes.put("Afterwork", "afterwork");
-        themes.put("Aristo", "aristo");
-        themes.put("Black-Tie", "black-tie");
-        themes.put("Blitzer", "blitzer");
-        themes.put("Bluesky", "bluesky");
-        themes.put("Bootstrap", "bootstrap");
-        themes.put("Casablanca", "casablanca");
-        themes.put("Cruze", "cruze");
-        themes.put("Cupertino", "cupertino");
-        themes.put("Dark-Hive", "dark-hive");
-        themes.put("Delta", "delta");
-        themes.put("Dot-Luv", "dot-luv");
-        themes.put("Eggplant", "eggplant");
-        themes.put("Excite-Bike", "excite-bike");
-        themes.put("Flick", "flick");
-        themes.put("Glass-X", "glass-x");
-        themes.put("Home", "home");
-        themes.put("Hot-Sneaks", "hot-sneaks");
-        themes.put("Humanity", "humanity");
-        themes.put("Le-Frog", "le-frog");
-        themes.put("Midnight", "midnight");
-        themes.put("Mint-Choc", "mint-choc");
-        themes.put("Overcast", "overcast");
-        themes.put("Pepper-Grinder", "pepper-grinder");
-        themes.put("Redmond", "redmond");
-        themes.put("Rocket", "rocket");
-        themes.put("Sam", "sam");
-        themes.put("Smoothness", "smoothness");
-        themes.put("South-Street", "south-street");
-        themes.put("Start", "start");
-        themes.put("Sunny", "sunny");
-        themes.put("Swanky-Purse", "swanky-purse");
-        themes.put("Trontastic", "trontastic");
-        themes.put("UI-Darkness", "ui-darkness");
-        themes.put("UI-Lightness", "ui-lightness");
-        themes.put("Vader", "vader");
-
-        availableThemes = new ArrayList<Theme>();
-        for (Map.Entry<String, String> theme : themes.entrySet()) {
-            availableThemes.add(new Theme(theme.getKey(), theme.getValue()));
-        }
-
-        // set "Home" theme as default
-        theme = availableThemes.get(18);
-    }
+  @PostConstruct
+  public void init()
+  {
+    for (String th : THEMES)
+      themes.put(th, Introspector.decapitalize(th));
+    for (Map.Entry<String, String> theme : themes.entrySet())
+      availableThemes.add(new Theme(theme.getKey(), theme.getValue()));
+    theme = availableThemes.get(18);
+  }
 }

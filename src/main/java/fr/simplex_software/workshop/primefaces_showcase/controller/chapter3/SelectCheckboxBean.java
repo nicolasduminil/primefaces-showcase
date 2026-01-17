@@ -1,43 +1,42 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter3;
 
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-/**
- * User: mertcaliskan
- * Date: 6/26/12
- */
 @Named
 @ViewScoped
-public class SelectCheckboxBean implements Serializable {
+public class SelectCheckboxBean implements Serializable
+{
+  private boolean selectedValue;
 
-    private boolean selectedValue;
+  private List<String> selectedCountries;
 
-    private List<String> selectedCountries;
+  public boolean isSelectedValue()
+  {
+    return selectedValue;
+  }
 
-    public boolean isSelectedValue() {
-        return selectedValue;
-    }
+  public void setSelectedValue(boolean selectedValue)
+  {
+    this.selectedValue = selectedValue;
+  }
 
-    public void setSelectedValue(boolean selectedValue) {
-        this.selectedValue = selectedValue;
-    }
+  public List<String> getSelectedCountries()
+  {
+    return selectedCountries;
+  }
 
-    public List<String> getSelectedCountries() {
-        return selectedCountries;
-    }
+  public void setSelectedCountries(List<String> selectedCountries)
+  {
+    this.selectedCountries = selectedCountries;
+  }
 
-    public void setSelectedCountries(List<String> selectedCountries) {
-        this.selectedCountries = selectedCountries;
-    }
-
-    public void addMessage() {
-        String summaryKey = selectedValue ? "checkbox.checked" : "checkbox.unchecked";
-
-        MessageUtil.addInfoMessage(summaryKey);
-    }
+  public void addMessage()
+  {
+    MessageUtil.addInfoMessage(selectedValue ? "checkbox.checked" : "checkbox.unchecked");
+  }
 }

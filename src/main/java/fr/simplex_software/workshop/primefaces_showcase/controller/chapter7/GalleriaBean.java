@@ -1,23 +1,19 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter7;
 
-import fr.simplex_software.workshop.primefaces_showcaseconverter.CarConverter;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import fr.simplex_software.workshop.primefaces_showcase.converter.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-/**
- * User: mertcaliskan
- * Date: 9/11/12
- */
 @Named
 @ViewScoped
-public class GalleriaBean implements Serializable {
-
-    public List<Car> getCars() {
-        return new ArrayList<Car>(CarConverter.cars.values());
-    }
+public class GalleriaBean implements Serializable
+{
+  public List<Car> getCars()
+  {
+    return new ArrayList<Car>(CarConverter.cars.values());
+  }
 }

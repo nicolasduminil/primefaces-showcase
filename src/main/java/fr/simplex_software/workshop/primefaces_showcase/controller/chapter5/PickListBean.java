@@ -1,69 +1,51 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter5;
 
-import fr.simplex_software.workshop.primefaces_showcaseconverter.CarConverter;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
-import org.primefaces.event.TransferEvent;
-import org.primefaces.model.DualListModel;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import fr.simplex_software.workshop.primefaces_showcase.converter.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.event.*;
+import org.primefaces.model.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
 
-/**
- * User: mertcaliskan
- * Date: 8/19/12
- */
 @Named
 @ViewScoped
-public class PickListBean implements Serializable {
+public class PickListBean implements Serializable
+{
+  private DualListModel<Car> cars;
 
-    private DualListModel<String> countries;
+  private final List<String> countriesSource = List.of("England", "Germany", "Switzerland", "Turkey");
 
-    private DualListModel<Car> cars;
+  public PickListBean()
+  {
+    cars = new DualListModel<>(new ArrayList<>(CarConverter.cars.values()), new ArrayList<>());
+  }
 
-    private List<String> countriesSource = new ArrayList<String>();
-    private List<String> countriesTarget = new ArrayList<String>();
+  public DualListModel<String> getCountries()
+  {
+    DualListModel<String> dualListModel = new DualListModel<>();
+    IntStream.range(0, 250).forEach(i -> dualListModel.getSource().addAll(countriesSource));
+    return dualListModel;
+  }
 
-    public PickListBean() {
-        countriesSource.add("England");
-        countriesSource.add("Germany");
-        countriesSource.add("Switzerland");
-        countriesSource.add("Turkey");
+  public DualListModel<Car> getCars()
+  {
+    return cars;
+  }
 
-        countries = new DualListModel<String>(countriesSource, countriesTarget);
+  public void setCars(DualListModel<Car> cars)
+  {
+    this.cars = cars;
+  }
 
-        List<Car> carsSource = new ArrayList<Car>(CarConverter.cars.values());
-        List<Car> carsTarget = new ArrayList<Car>();
-
-        cars = new DualListModel<Car>(carsSource, carsTarget);
-    }
-
-    public DualListModel<String> getCountries() {
-        DualListModel<String> d = new DualListModel<String>();
-        for (int i = 0; i < 250; i++) {
-            d.getSource().addAll(countriesSource);
-        }
-        return d;
-    }
-
-    public void setCountries(DualListModel<String> countries) {
-        this.countries = countries;
-    }
-
-    public DualListModel<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(DualListModel<Car> cars) {
-        this.cars = cars;
-    }
-
-    public void handleTransfer(TransferEvent event) {
-        MessageUtil.addInfoMessage("items.transferred", event.getItems());
-        MessageUtil.addInfoMessage("is.added", event.isAdd());
-        MessageUtil.addInfoMessage("is.removed", event.isRemove());
-    }
+  public void handleTransfer(TransferEvent event)
+  {
+    MessageUtil.addInfoMessage("items.transferred", event.getItems());
+    MessageUtil.addInfoMessage("is.added", event.isAdd());
+    MessageUtil.addInfoMessage("is.removed", event.isRemove());
+  }
 }

@@ -1,53 +1,36 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter4;
 
-import fr.simplex_software.workshop.primefaces_showcase.utils.MessageUtil;
-import org.primefaces.event.DashboardReorderEvent;
-import org.primefaces.model.DashboardColumn;
-import org.primefaces.model.DashboardModel;
-import org.primefaces.model.DefaultDashboardColumn;
-import org.primefaces.model.DefaultDashboardModel;
+import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.event.*;
+import org.primefaces.model.*;
+import org.primefaces.model.dashboard.*;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import java.io.*;
+import java.util.*;
 
-/**
- * User: mertcaliskan
- * Date: 8/1/12
- */
 @Named
 @ViewScoped
-public class DashboardBean implements Serializable {
+public class DashboardBean implements Serializable
+{
+  private DashboardModel model = new DefaultDashboardModel();
 
-    private DashboardModel model;
+  public DashboardBean()
+  {
+    model.addWidget(new DefaultDashboardWidget(List.of("calculator", "calendar",
+      "contact", "dictionary", "translation")));
+  }
 
-    public DashboardBean() {
-        model = new DefaultDashboardModel();
+  public void handleReorder(DashboardReorderEvent event)
+  {
+    MessageUtil.addInfoMessageWithoutKey("Reordered: %s".formatted(event.getWidgetId()),
+      "Item index: %s, Column index: %s, Sender column index: "
+        .formatted(event.getItemIndex(), event.getColumnIndex(), event.getSenderColumnIndex()));
+  }
 
-        DashboardColumn column1 = new DefaultDashboardColumn();
-        DashboardColumn column2 = new DefaultDashboardColumn();
-        DashboardColumn column3 = new DefaultDashboardColumn();
-
-        column1.addWidget("calculator");
-        column1.addWidget("calendar");
-        column1.addWidget("contact");
-
-        column2.addWidget("dictionary");
-
-        column3.addWidget("weather");
-        column3.addWidget("translation");
-
-        model.addColumn(column1);
-        model.addColumn(column2);
-        model.addColumn(column3);
-    }
-
-    public void handleReorder(DashboardReorderEvent event) {
-        MessageUtil.addInfoMessageWithoutKey("Reordered: " + event.getWidgetId(),
-                "Item index: " + event.getItemIndex() + ", Column index: " + event.getColumnIndex() + ", Sender column index: " + event.getSenderColumnIndex());
-    }
-
-    public DashboardModel getModel() {
-        return model;
-    }
+  public DashboardModel getModel()
+  {
+    return model;
+  }
 }

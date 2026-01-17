@@ -1,67 +1,57 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter6;
 
-import jakarta.faces.model.SelectItem;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import jakarta.faces.model.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-/**
- * CheckboxMenuBean
- *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
+import java.io.*;
+import java.util.*;
+
 @Named
 @ViewScoped
-public class CheckboxMenuBean implements Serializable {
+public class CheckboxMenuBean implements Serializable
+{
+  private List<SelectItem> languages = List.of(
+    new SelectItem(new Locale("de"), "German"),
+    new SelectItem(new Locale("en"), "English"),
+    new SelectItem(new Locale("it"), "Italian"),
+    new SelectItem(new Locale("fr"), "French")
+  );
+  private Map<String, String> color = Map.of (
+    "Red", "Red",
+    "Green", "Green",
+    "Blue", "Blue"
+  );
+  private List<Locale> selectedLanguages;
+  private List<String> selectedColors;
 
-	private List<SelectItem> languages;
-	private Map<String, String> color;
-	private List<Locale> selectedLanguages;
-	private List<String> selectedColors;
+  public List<SelectItem> getLanguages()
+  {
+    return languages;
+  }
 
-	public List<SelectItem> getLanguages() {
-		if (languages == null) {
-			languages = new ArrayList<SelectItem>();
-			languages.add(new SelectItem(new Locale("de"), "German"));
-			languages.add(new SelectItem(new Locale("en"), "English"));
-			languages.add(new SelectItem(new Locale("it"), "Italian"));
-			languages.add(new SelectItem(new Locale("fr"), "French"));
-		}
+  public Map<String, String> getColors()
+  {
+    return color;
+  }
 
-		return languages;
-	}
+  public List<Locale> getSelectedLanguages()
+  {
+    return selectedLanguages;
+  }
 
-	public Map<String, String> getColors() {
-		if (color == null) {
-			color = new HashMap<String, String>();
-			color.put("Red", "Red");
-			color.put("Green", "Green");
-			color.put("Blue", "Blue");
-			color.put("Orange", "Orange");
-		}
+  public void setSelectedLanguages(List<Locale> selectedLanguages)
+  {
+    this.selectedLanguages = selectedLanguages;
+  }
 
-		return color;
-	}
+  public List<String> getSelectedColors()
+  {
+    return selectedColors;
+  }
 
-	public List<Locale> getSelectedLanguages() {
-		return selectedLanguages;
-	}
-
-	public void setSelectedLanguages(List<Locale> selectedLanguages) {
-		this.selectedLanguages = selectedLanguages;
-	}
-
-	public List<String> getSelectedColors() {
-		return selectedColors;
-	}
-
-	public void setSelectedColors(List<String> selectedColors) {
-		this.selectedColors = selectedColors;
-	}
+  public void setSelectedColors(List<String> selectedColors)
+  {
+    this.selectedColors = selectedColors;
+  }
 }
