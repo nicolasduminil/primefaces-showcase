@@ -8,7 +8,7 @@ import java.util.*;
 @ConfigMapping(prefix = "book")
 public interface BookConfig extends Serializable
 {
-  Map<String, Chapter> chapters();
+  List<Chapter> chapters();
 
   interface Chapter extends Serializable
   {

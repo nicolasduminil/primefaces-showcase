@@ -24,13 +24,13 @@ public class BookBean implements Serializable
 
   public BookBean()
   {
-    root = new DefaultTreeNode<>(new BookTreeNode("root", null), null);
+    root = new DefaultTreeNode<>("chapter", new BookTreeNode("root", null), null);
   }
 
   @PostConstruct
   public void postConstruct()
   {
-    bookConfig.chapters().values().forEach(chapter ->
+    bookConfig.chapters().forEach(chapter ->
         populateChapter(chapter.title(), chapter.pages()));
   }
 

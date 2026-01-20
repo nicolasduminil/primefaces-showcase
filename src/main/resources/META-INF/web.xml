@@ -38,6 +38,7 @@
   <context-param>
     <param-name>primefaces.THEME</param-name>
     <param-value>#{userSettingsBean.theme.name}</param-value>
+    <!--param-value>primefaces-hot-sneaks</param-value-->
   </context-param>
   <!-- Context parameters - MyFaces -->
   <context-param>
@@ -88,6 +89,10 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
+  <!--servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/jakarta.faces.resource/*</url-pattern>
+  </servlet-mapping-->
   <mime-mapping>
     <extension>*</extension>
     <mime-type>image/png</mime-type>
