@@ -7,7 +7,7 @@
 
 <f:view contentType="text/html" locale="en">
   <h:head>
-    <title>PrimeFaces Cookbook - ShowCase</title>
+    <title>PrimeFaces with Quarkus ShowCase</title>
     <f:facet name="first">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     </f:facet>
@@ -15,16 +15,16 @@
   </h:head>
   <h:body>
     <h:panelGroup layout="block" styleClass="slogan">
-      <h:outputText value="Live samples of the PrimeFaces Cookbook (Second Edition)"/>
+      <h:outputText value="Live samples of the PrimeFaces with Quarkus"/>
     </h:panelGroup>
     <h:form id="mainForm" prependId="false">
       <h:panelGrid columns="2" columnClasses="chaptersMenuColumn,chaptersContentColumn">
         <h:panelGroup layout="block">
-          <h:graphicImage library="images" name="logo.png" styleClass="logo" title="PrimeFaces Cookbook"/>
+          <h:graphicImage library="images" name="logo.png" styleClass="logo" title="PrimeFaces with Quarkus Showcase"/>
           <p:tree id="bookTree" value="#{bookBean.root}" var="node" selectionMode="single"
                   selection="#{bookBean.selectedNode}">
             <p:ajax event="select" listener="#{bookBean.onNodeSelect}"/>
-            <p:treeNode expandedIcon="ui-icon-folder-open"
+            <p:treeNode type="chapter" expandedIcon="ui-icon-folder-open"
                         collapsedIcon="ui-icon-folder-collapsed">
               <h:outputText value="#{node.name}"/>
             </p:treeNode>

@@ -1,56 +1,44 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter11;
 
-import org.primefaces.context.RequestContext;
+import jakarta.faces.event.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.*;
 
-import jakarta.faces.event.ActionEvent;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import java.io.*;
 
-/**
- * RequestContextBean
- *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
 @Named
 @ViewScoped
-public class RequestContextBean implements Serializable {
+public class RequestContextBean implements Serializable
+{
+  private boolean firstOutput = true;
 
-	private boolean firstOutput = true;
+  private int counter = 0;
 
-	private int counter = 0;
+  public void incrementWithUpdate()
+  {
+    counter++;
+    PrimeFaces.current().ajax().update(firstOutput ? "firstOutput" : "secondOutput");
+  }
 
-	public void incrementWithUpdate(ActionEvent ae) {
-		counter++;
+  public void incrementWithScroll()
+  {
+    counter++;
+    PrimeFaces.current().scrollTo("counter");
+  }
 
-		RequestContext requestContext =
-                RequestContext.getCurrentInstance();
+  public boolean isFirstOutput()
+  {
+    return firstOutput;
+  }
 
-		if (firstOutput) {
-			requestContext.update("firstOutput");
-		} else {
-			requestContext.update("secondOutput");
-		}
-	}
+  public void setFirstOutput(boolean firstOutput)
+  {
+    this.firstOutput = firstOutput;
+  }
 
-	public void incrementWithScroll(ActionEvent ae) {
-		counter++;
-
-		RequestContext requestContext =
-                RequestContext.getCurrentInstance();
-		requestContext.scrollTo("counter");
-	}
-
-	public boolean isFirstOutput() {
-		return firstOutput;
-	}
-
-	public void setFirstOutput(boolean firstOutput) {
-		this.firstOutput = firstOutput;
-	}
-
-	public int getCounter() {
-		return counter;
-	}
+  public int getCounter()
+  {
+    return counter;
+  }
 }

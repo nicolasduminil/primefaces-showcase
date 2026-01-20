@@ -31,7 +31,7 @@ public class BookBean implements Serializable
   public void postConstruct()
   {
     bookConfig.chapters().values().forEach(chapter ->
-      populateChapter(chapter.title(), chapter.pages()));
+        populateChapter(chapter.title(), chapter.pages()));
   }
 
   public TreeNode<BookTreeNode> getRoot()
@@ -65,8 +65,8 @@ public class BookBean implements Serializable
   private void populateChapter(String chapterTitle, List<BookConfig.Page> pages)
   {
     TreeNode<BookTreeNode> chapterNode =
-      new DefaultTreeNode<>(new BookTreeNode(chapterTitle, null), root);
+      new DefaultTreeNode<>("chapter", new BookTreeNode(chapterTitle, null), root);
     pages.forEach(page ->
       new DefaultTreeNode<>("chapteritem", new BookTreeNode(page.name(), page.view()), chapterNode));
-  }
+   }
 }

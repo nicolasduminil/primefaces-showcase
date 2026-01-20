@@ -1,56 +1,53 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter11;
 
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
+import jakarta.faces.application.*;
+import jakarta.faces.context.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.*;
+import org.primefaces.event.*;
 
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 @Named
 @ViewScoped
-public class DialogFrameworkBean implements Serializable {
+public class DialogFrameworkBean implements Serializable
+{
 
-    private String bookName;
+  private String bookName;
 
-    public void showRatingDialog() {
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put("modal", true);
-        options.put("draggable", false);
-        options.put("resizable", false);
-        options.put("contentWidth", 500);
-        options.put("contentHeight", 100);
-        options.put("includeViewParams", true);
+  public void showRatingDialog()
+  {
+    Map<String, Object> options = Map.of(
+      "modal", true,
+      "draggable", false,
+      "resizable", false,
+      "contentWidth", 500,
+      "contentHeight", 100,
+      "includeViewParams", true);
+    Map<String, List<String>> params = new HashMap<String, List<String>>();
+    List<String> values = List.of(bookName);
+    params.put("bookName", values);
 
-        Map<String, List<String>> params = new HashMap<String, List<String>>();
-        List<String> values = new ArrayList<String>();
-        values.add(bookName);
-        params.put("bookName", values);
+    PrimeFaces.current().dialog().openDynamic("/views/chapter11/bookRating", options, params);
+  }
 
-        RequestContext.getCurrentInstance().openDialog("/views/chapter11/bookRating", options, params);
-    }
+  public void onDialogReturn(SelectEvent event)
+  {
+    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+      FacesMessage.SEVERITY_INFO,
+      "You rated the book with %s".formatted(event.getObject()),
+      null));
+  }
 
-    public void onDialogReturn(SelectEvent event) {
-        Object rating = event.getObject();
-        FacesMessage message = new FacesMessage(
-                FacesMessage.SEVERITY_INFO,
-                "You rated the book with " + rating,
-                null);
+  public String getBookName()
+  {
+    return bookName;
+  }
 
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
+  public void setBookName(String bookName)
+  {
+    this.bookName = bookName;
+  }
 }

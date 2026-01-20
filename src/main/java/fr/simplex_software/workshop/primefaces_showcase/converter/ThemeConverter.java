@@ -1,42 +1,36 @@
 package fr.simplex_software.workshop.primefaces_showcase.converter;
 
-import fr.simplex_software.workshop.primefaces_showcase.controller.chapter2.UserSettingsBean;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter2.Theme;
+import fr.simplex_software.workshop.primefaces_showcase.controller.chapter2.*;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter2.*;
+import jakarta.enterprise.context.*;
+import jakarta.faces.component.*;
+import jakarta.faces.context.*;
+import jakarta.faces.convert.*;
+import jakarta.inject.*;
+import org.apache.commons.lang3.*;
 
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.convert.Converter;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-/**
- * ThemeConverter
- *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
 @Named
 @SessionScoped
-public class ThemeConverter implements Serializable, Converter {
-    
-    @Inject
-    private UserSettingsBean userSettingsBean;
+public class ThemeConverter implements Serializable, Converter<Theme>
+{
+  @Inject
+  private UserSettingsBean userSettingsBean;
 
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        List<Theme> themes = userSettingsBean.getAvailableThemes();
-        for (Theme theme : themes) {
-            if (theme.getName().equals(value)) {
-                return theme;
-            }
-        }
-        
-        return null;
-	}
+  @Override
+  public Theme getAsObject(FacesContext context, UIComponent component, String value)
+  {
+    return userSettingsBean.getAvailableThemes().stream()
+      .filter(theme -> theme.getName().equals(value))
+      .findFirst()
+      .orElse(null);
+  }
 
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		return ((Theme) value).getName();
-	}
+  @Override
+  public String getAsString(FacesContext facesContext, UIComponent uiComponent, Theme theme) throws ConverterException
+  {
+    return theme == null ? "" : theme.getName();
+  }
 }

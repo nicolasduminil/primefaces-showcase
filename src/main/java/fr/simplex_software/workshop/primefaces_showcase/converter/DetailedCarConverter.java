@@ -1,49 +1,38 @@
 package fr.simplex_software.workshop.primefaces_showcase.converter;
 
-/**
- * User: mertcaliskan
- * Date: 7/9/12
- */
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.*;
+import jakarta.faces.component.*;
+import jakarta.faces.context.*;
+import jakarta.faces.convert.*;
+import org.apache.commons.lang3.*;
 
-import org.apache.commons.lang3.StringUtils;
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter5.DetailedCar;
-
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.convert.Converter;
-import jakarta.faces.convert.FacesConverter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @FacesConverter(value = "fr.simplex_software.workshop.primefaces_showcaseconverter.DetailedCarConverter")
-public class DetailedCarConverter implements Converter {
+public class DetailedCarConverter implements Converter<DetailedCar>
+{
+  public static Map<String, DetailedCar> cars = new HashMap<>(
+    Map.of(
+      "CC", new DetailedCar("CC", 2008, "black", 4),
+      "Golf", new DetailedCar("Golf", 1974, "white", 2),
+      "Jetta", new DetailedCar("Jetta", 1979, "blue", 5),
+      "Passat", new DetailedCar("Passat", 1973, "magenta", 5),
+      "Polo", new DetailedCar("Polo", 1975, "brown", 4),
+      "Scirocco", new DetailedCar("Scirocco", 1974, "red", 2),
+      "Touareg", new DetailedCar("Touareg", 2002, "silver", 7)
+    )
+  );
 
-    public static Map<String, DetailedCar> cars = new HashMap<String, DetailedCar>();
+  @Override
+  public DetailedCar getAsObject(final FacesContext fc, final UIComponent component, final String value)
+  {
+    return StringUtils.isBlank(value) ? null : cars.get(value);
+  }
 
-    static {
-        cars.put("CC", new DetailedCar("CC", 2008, "black", 4));
-        cars.put("Golf", new DetailedCar("Golf", 1974, "white", 2));
-        cars.put("Jetta", new DetailedCar("Jetta", 1979, "blue", 5));
-        cars.put("Passat", new DetailedCar("Passat", 1973, "magenta", 5));
-        cars.put("Polo", new DetailedCar("Polo", 1975, "brown", 4));
-        cars.put("Scirocco", new DetailedCar("Scirocco", 1974, "red", 2));
-        cars.put("Touareg", new DetailedCar("Touareg", 2002, "silver", 7));
-    }
-    
-    public Object getAsObject(final FacesContext fc, final UIComponent component, final String value) {
-        if (StringUtils.isBlank(value)) {
-            return null;
-        }
-        else {
-            return cars.get(value);
-        }
-    }
-
-    public String getAsString(final FacesContext fc, final UIComponent component, final Object value) {
-        if (value == null || value.equals("")) {
-            return "";
-        } else {
-            return String.valueOf(((DetailedCar) value).getName());
-        }
-    }
+  @Override
+  public String getAsString(FacesContext facesContext, UIComponent uiComponent, DetailedCar car) throws ConverterException
+  {
+    return car == null ? "" : car.getName();
+  }
 }

@@ -1,34 +1,30 @@
 package fr.simplex_software.workshop.primefaces_showcase.model.chapter5;
 
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
-import org.primefaces.model.SelectableDataModel;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import jakarta.faces.model.*;
+import org.primefaces.model.*;
 
-import jakarta.faces.model.ListDataModel;
-import java.util.List;
+import java.util.*;
 
-/**
- * Created by mertcaliskan
- * on 02/03/15.
- */
-public class CarDataModel extends ListDataModel<Car> implements SelectableDataModel<Car> {
+public class CarDataModel extends ListDataModel<Car> implements SelectableDataModel<Car>
+{
+  public CarDataModel (List<Car> cars)
+  {
+    super(cars);
+  }
 
-    public CarDataModel(List<Car> data) {
-        super(data);
-    }
+  @Override
+  public Car getRowData(String rowKey)
+  {
+    return ((List<Car>) getWrappedData()).stream()
+      .filter(car -> car.getName().equals(rowKey))
+      .findFirst()
+      .orElse(null);
+  }
 
-    @Override
-    public Car getRowData(String rowKey) {
-        List<Car> cars = (List<Car>) getWrappedData();
-
-        for(Car car : cars) {
-            if(car.getName().equals(rowKey))
-                return car;
-        }
-        return null;
-    }
-
-    @Override
-    public Object getRowKey(Car car) {
-        return car.getName();
-    }
+  @Override
+  public String getRowKey(Car car)
+  {
+    return car.getName();
+  }
 }

@@ -1,39 +1,46 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter10;
 
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.Date;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+
+import java.io.*;
+import java.util.*;
 
 @Named
 @ViewScoped
-public class InstantCsvBean implements Serializable {
+public class InstantCsvBean implements Serializable
+{
+  private String value1;
+  private Integer value2;
+  private Date value3;
 
-    private String value1;
-    private Integer value2;
-    private Date value3;
+  public String getValue1()
+  {
+    return value1;
+  }
 
-    public String getValue1() {
-        return value1;
-    }
+  public void setValue1(String value1)
+  {
+    this.value1 = value1;
+  }
 
-    public void setValue1(String value1) {
-        this.value1 = value1;
-    }
+  public Integer getValue2()
+  {
+    return value2;
+  }
 
-    public Integer getValue2() {
-        return value2;
-    }
+  public void setValue2(Integer value2)
+  {
+    this.value2 = value2;
+  }
 
-    public void setValue2(Integer value2) {
-        this.value2 = value2;
-    }
+  public Date getValue3()
+  {
+    return value3;
+  }
 
-    public Date getValue3() {
-        return value3;
-    }
-
-    public void setValue3(Date value3) {
-        this.value3 = value3;
-    }
+  public void setValue3(Date value3)
+  {
+    this.value3 = value3;
+  }
 }

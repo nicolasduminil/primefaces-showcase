@@ -1,57 +1,58 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter11;
 
-import org.primefaces.context.RequestContext;
+import jakarta.faces.application.*;
+import jakarta.faces.component.*;
+import jakarta.faces.context.*;
+import jakarta.faces.event.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
+import org.primefaces.*;
+import org.primefaces.context.*;
 
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.component.UIInput;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.event.ActionEvent;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
+import java.io.*;
 
-/**
- * AjaxCallbackParamBean
- *
- * @author Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
 @Named
 @ViewScoped
-public class AjaxCallbackParamBean implements Serializable {
+public class AjaxCallbackParamBean implements Serializable
+{
+  private String name;
 
-    private String name;
+  public void save(ActionEvent ae)
+  {
+    PrimeFaces.Ajax requestContext = PrimeFaces.current().ajax();
 
-    public void save(ActionEvent ae) {
-        RequestContext requestContext = RequestContext.getCurrentInstance();
+    String message;
+    FacesMessage.Severity severity;
+    UIInput input = (UIInput) ae.getComponent().findComponent("name");
 
-        String message;
-        FacesMessage.Severity severity;
-        UIInput input = (UIInput) ae.getComponent().findComponent("name");
+    if ("PrimeFaces Cookbook".equals(name))
+    {
+      message = "All right!";
+      severity = FacesMessage.SEVERITY_INFO;
 
-        if ("PrimeFaces Cookbook".equals(name)) {
-            message = "All right!";
-            severity = FacesMessage.SEVERITY_INFO;
+      requestContext.addCallbackParam("validName", true);
+      input.setValid(true);
+    }
+    else
+    {
+      message = "Name is wrong, try again";
+      severity = FacesMessage.SEVERITY_ERROR;
 
-            requestContext.addCallbackParam("validName", true);
-            input.setValid(true);
-        } else {
-            message = "Name is wrong, try again";
-            severity = FacesMessage.SEVERITY_ERROR;
-
-            requestContext.addCallbackParam("validName", false);
-            input.setValid(false);
-        }
-
-        FacesMessage msg = new FacesMessage(severity, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+      requestContext.addCallbackParam("validName", false);
+      input.setValid(false);
     }
 
-    public String getName() {
-        return name;
-    }
+    FacesMessage msg = new FacesMessage(severity, message, null);
+    FacesContext.getCurrentInstance().addMessage(null, msg);
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getName()
+  {
+    return name;
+  }
+
+  public void setName(String name)
+  {
+    this.name = name;
+  }
 }

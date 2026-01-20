@@ -1,87 +1,95 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter11;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.annotation.*;
+import jakarta.faces.view.*;
+import jakarta.inject.*;
 
-/**
- * BlockUIBean
- *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
+import java.io.*;
+import java.util.*;
+
 @Named
 @ViewScoped
-public class BlockUIBean implements Serializable {
+public class BlockUIBean implements Serializable
+{
+  private List<Message> messages;
 
-	private List<Message> messages;
+  @PostConstruct
+  public void initialize()
+  {
+    if (messages == null)
+    {
+      messages = new ArrayList<>();
 
-	@PostConstruct
-	private void initialize() {
-		if (messages == null) {
-			messages = new ArrayList<Message>();
+      for (int i = 0; i < 100; i++)
+      {
+        Message message = new Message();
+        message.setSubject("subject " + i);
+        message.setText("text " + i);
+        messages.add(message);
+      }
+    }
+  }
 
-			for (int i = 0; i < 100; i++) {
-				Message message = new Message();
-				message.setSubject("subject " + i);
-				message.setText("text " + i);
-				messages.add(message);
-			}
-		}
-	}
+  public void doSomething()
+  {
+    try
+    {
+      Thread.sleep(1500);
+    }
+    catch (Exception e)
+    {
+    }
+  }
 
-	public void doSomething() {
-		try {
-			// simulate a long running request
-			Thread.sleep(1500);
-		} catch (Exception e) {
-			// ignore
-		}
-	}
+  public List<Message> getMessages()
+  {
+    return messages;
+  }
 
-	public List<Message> getMessages() {
-		return messages;
-	}
+  public void setMessages(final List<Message> messages)
+  {
+    this.messages = messages;
+  }
 
-	public void setMessages(final List<Message> messages) {
-		this.messages = messages;
-	}
+  public static class Message implements Serializable
+  {
+    private String subject;
+    private String text;
+    private long time;
 
-	public class Message implements Serializable {
+    public Message()
+    {
+      time = System.currentTimeMillis() + (long) (Math.random() * 10);
+    }
 
-		private String subject;
-		private String text;
-		private long time;
+    public final String getSubject()
+    {
+      return subject;
+    }
 
-		public Message() {
-			time = System.currentTimeMillis() + (long) (Math.random() * 10);
-		}
+    public final void setSubject(String subject)
+    {
+      this.subject = subject;
+    }
 
-		public final String getSubject() {
-			return subject;
-		}
+    public final String getText()
+    {
+      return text;
+    }
 
-		public final void setSubject(String subject) {
-			this.subject = subject;
-		}
+    public final void setText(String text)
+    {
+      this.text = text;
+    }
 
-		public final String getText() {
-			return text;
-		}
+    public long getTime()
+    {
+      return time;
+    }
 
-		public final void setText(String text) {
-			this.text = text;
-		}
-
-		public long getTime() {
-			return time;
-		}
-
-		public void setTime(long time) {
-			this.time = time;
-		}
-	}
+    public void setTime(long time)
+    {
+      this.time = time;
+    }
+  }
 }

@@ -1,28 +1,24 @@
 package fr.simplex_software.workshop.primefaces_showcase.validator;
 
-import org.primefaces.validate.bean.ClientConstraint;
+import jakarta.validation.*;
+import org.primefaces.validate.bean.*;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.*;
 
 @Constraint(validatedBy = CvcConstraintValidator.class)
 @ClientConstraint(resolvedBy = CvcClientConstraint.class)
 @Target({FIELD, METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidCVC {
+public @interface ValidCVC
+{
+  String message() default "{invalid.cvc.message}";
 
-    String message() default "{invalid.cvc.message}";
+  Class<?>[] groups() default {};
 
-    Class<?>[] groups() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    Class<? extends Payload>[] payload() default {};
-    
-    // identifier of the select menu with cards
-    String forCardMenu() default "";
+  // identifier of the select menu with cards
+  String forCardMenu() default "";
 }

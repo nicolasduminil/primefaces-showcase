@@ -11,10 +11,6 @@ import software.xdev.chartjs.model.options.*;
 import java.io.*;
 import java.util.*;
 
-/**
- * User: mertcaliskan
- * Date: 9/18/12
- */
 @Named
 @ViewScoped
 public class ChartBean implements Serializable

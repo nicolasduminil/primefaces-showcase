@@ -1,101 +1,100 @@
 package fr.simplex_software.workshop.primefaces_showcase.model.chapter5;
 
-import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
+import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.*;
+import org.primefaces.model.*;
 
 import java.util.*;
+import java.util.stream.*;
 
-/**
- * User: mertcaliskan
- * Date: 9/2/12
- */
-public class LazyCarDataModel extends LazyDataModel<Car> {
+public class LazyCarDataModel extends LazyDataModel<Car>
+{
+  private final List<Car> datasource;
 
-    private List<Car> datasource;
+  public LazyCarDataModel(List<Car> datasource)
+  {
+    this.datasource = datasource;
+  }
 
-    public LazyCarDataModel(List<Car> datasource) {
-        this.datasource = datasource;
+  @Override
+  public int count(Map<String, FilterMeta> filters)
+  {
+    return (int) datasource.stream()
+      .filter(car -> filter(car, filters))
+      .count();
+  }
+
+  @Override
+  public List<Car> load(int first, int pageSize, Map<String, SortMeta> sortOrder, Map<String, FilterMeta> filters)
+  {
+    List<Car> data = datasource.stream()
+      .filter(car -> filter(car, filters))
+      .collect(Collectors.toList());
+
+    if (sortOrder != null && !sortOrder.isEmpty())
+    {
+      data.sort((car1, car2) ->
+      {
+        for (SortMeta meta : sortOrder.values())
+        {
+          try
+          {
+            @SuppressWarnings("unchecked")
+            Comparable<Object> value1 = (Comparable<Object>) car1.getClass().getField(meta.getField()).get(car1);
+            @SuppressWarnings("unchecked")
+            Comparable<Object> value2 = (Comparable<Object>) car2.getClass().getField(meta.getField()).get(car2);
+            int result = value1.compareTo(value2);
+            if (result != 0)
+            {
+              return meta.getOrder() == SortOrder.ASCENDING ? result : -result;
+            }
+          }
+          catch (Exception e)
+          {
+            throw new RuntimeException(e);
+          }
+        }
+        return 0;
+      });
     }
 
-    @Override
-    public Car getRowData(String rowKey) {
-        for(Car car : datasource) {
-            if(car.getName().equals(rowKey))
-                return car;
-        }
+    return data.stream()
+      .skip(first)
+      .limit(pageSize)
+      .toList();
+  }
 
-        return null;
-    }
+  @Override
+  public Car getRowData(String rowKey)
+  {
+    return datasource.stream()
+      .filter(car -> car.getName().equals(rowKey))
+      .findFirst()
+      .orElse(null);
+  }
 
-    @Override
-    public Object getRowKey(Car car) {
-        return car.getName();
-    }
+  @Override
+  public String getRowKey(Car car)
+  {
+    return car.getName();
+  }
 
-    @Override
-    public List<Car> load(int first, int pageSize, final String sortField, final SortOrder sortOrder, Map<String, Object> filters) {
-        List<Car> data = new ArrayList<Car>();
-
-        for(Car car : datasource) {
-            boolean match = true;
-
-            for(String filterProperty : filters.keySet()) {
-                try {
-                    String filterValue = (String)filters.get(filterProperty);
-                    String fieldValue = String.valueOf(car.getClass().getField(filterProperty).get(car));
-
-                    if(filterValue == null || fieldValue.startsWith(filterValue)) {
-                        match = true;
-                    }
-                    else {
-                        match = false;
-                        break;
-                    }
-                } catch(Exception e) {
-                    match = false;
-                }
-            }
-            if(match) {
-                data.add(car);
-            }
-        }
-
-        //sort
-        if(sortField != null) {
-            Collections.sort(data, new Comparator<Car>() {
-                @Override
-                public int compare(Car car1, Car car2) {
-                    Object value1 = null;
-                    try {
-                        value1 = Car.class.getField(sortField).get(car1);
-                        Object value2 = Car.class.getField(sortField).get(car2);
-                        int value = ((Comparable)value1).compareTo(value2);
-                        return SortOrder.ASCENDING.equals(sortOrder) ? value : -1 * value;
-                    }
-                    catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-            );
-        }
-
-        //rowCount
-        int dataSize = data.size();
-        this.setRowCount(dataSize);
-
-        //paginate
-        if(dataSize > pageSize) {
-            try {
-                return data.subList(first, first + pageSize);
-            }
-            catch(IndexOutOfBoundsException e) {
-                return data.subList(first, first + (dataSize % pageSize));
-            }
-        }
-        else {
-            return data;
-        }
-    }
+  private boolean filter(Car car, Map<String, FilterMeta> filters)
+  {
+    return filters.values().stream().allMatch(meta ->
+    {
+      boolean ret = true;
+      try
+      {
+        Object filterValue = meta.getFilterValue();
+        if (filterValue != null)
+          ret = String.valueOf(car.getClass().getField(meta.getField()).get(car))
+            .toLowerCase().startsWith(String.valueOf(filterValue).toLowerCase());
+      }
+      catch (Exception e)
+      {
+        ret = false;
+      }
+      return ret;
+    });
+  }
 }

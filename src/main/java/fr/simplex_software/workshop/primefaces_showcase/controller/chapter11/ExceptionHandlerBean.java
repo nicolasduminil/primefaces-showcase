@@ -1,24 +1,27 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter11;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.application.ViewExpiredException;
-import jakarta.faces.context.FacesContext;
-import jakarta.inject.Named;
+import jakarta.enterprise.context.*;
+import jakarta.faces.application.*;
+import jakarta.faces.context.*;
+import jakarta.inject.*;
 
 @Named
 @RequestScoped
-public class ExceptionHandlerBean {
+public class ExceptionHandlerBean
+{
+  public void throwNullPointerException()
+  {
+    throw new NullPointerException("NullPointerException");
+  }
 
-    public void throwNullPointerException() {
-        throw new NullPointerException("NullPointerException");
-    }
+  public void throwIllegalStateException()
+  {
+    throw new IllegalStateException("IllegalStateException");
+  }
 
-    public void throwIllegalStateException() {
-        throw new IllegalStateException("IllegalStateException");
-    }
-
-    public void throwViewExpiredException() {
-        throw new ViewExpiredException("ViewExpiredException",
-                FacesContext.getCurrentInstance().getViewRoot().getViewId());
-    }
+  public void throwViewExpiredException()
+  {
+    throw new ViewExpiredException("ViewExpiredException",
+      FacesContext.getCurrentInstance().getViewRoot().getViewId());
+  }
 }

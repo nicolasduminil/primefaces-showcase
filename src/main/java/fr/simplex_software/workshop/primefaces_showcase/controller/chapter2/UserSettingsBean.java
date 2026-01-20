@@ -33,7 +33,6 @@ public class UserSettingsBean implements Serializable
       "Excite-bike",
       "Flick",
       "Glass-x",
-      "Home",
       "Hot-sneaks",
       "Humanity",
       "Le-frog",

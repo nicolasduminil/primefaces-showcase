@@ -1,30 +1,25 @@
 package fr.simplex_software.workshop.primefaces_showcase.model.chapter2;
 
-import java.io.Serializable;
+import java.io.*;
 
-/**
- * Model class for a theme.
- *
- * @author  Oleg Varaksin / last modified by $Author: $
- * @version $Revision: 1.0 $
- */
-public class Theme implements Serializable {
+public class Theme implements Serializable
+{
+  private String displayName;
+  private String name;
 
-	private static final long serialVersionUID = 20141005L;
+  public Theme(String displayName, String name)
+  {
+    this.displayName = displayName;
+    this.name = name;
+  }
 
-	private String displayName;
-	private String name;
+  public final String getDisplayName()
+  {
+    return displayName;
+  }
 
-	public Theme(String displayName, String name) {
-		this.displayName = displayName;
-		this.name = name;
-	}
-
-	public final String getDisplayName() {
-		return displayName;
-	}
-
-	public String getName() {
-		return name;
-	}
+  public String getName()
+  {
+    return name;
+  }
 }

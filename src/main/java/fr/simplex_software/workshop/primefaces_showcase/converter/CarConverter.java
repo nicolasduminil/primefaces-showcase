@@ -1,19 +1,17 @@
 package fr.simplex_software.workshop.primefaces_showcase.converter;
 
+import jakarta.faces.convert.*;
 import org.apache.commons.lang3.StringUtils;
 import fr.simplex_software.workshop.primefaces_showcase.model.chapter3.Car;
 
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
-import jakarta.faces.convert.Converter;
-import jakarta.faces.convert.FacesConverter;
 
 import java.util.*;
 
 @FacesConverter(value = "fr.simplex_software.workshop.primefaces_showcase.converter.CarConverter")
-public class CarConverter implements Converter
+public class CarConverter implements Converter<Car>
 {
-
   public static Map<String, Car> cars = Map.of(
     "CC", new Car("CC", 2008),
     "Golf", new Car("Golf", 1974),
@@ -24,13 +22,14 @@ public class CarConverter implements Converter
     "Touareg", new Car("Touareg", 2002)
   );
 
-  public Object getAsObject(final FacesContext fc, final UIComponent component, final String value)
+  public Car getAsObject(final FacesContext fc, final UIComponent component, final String value)
   {
     return StringUtils.isBlank(value) ? null : cars.get(value);
   }
 
-  public String getAsString(final FacesContext fc, final UIComponent component, final Object value)
+  @Override
+  public String getAsString(FacesContext facesContext, UIComponent uiComponent, Car car) throws ConverterException
   {
-    return value == null ? "" : ((Car) value).getName();
+    return car == null ? "" : car.getName();
   }
 }

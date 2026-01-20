@@ -1,30 +1,34 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter11;
 
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.RateEvent;
-
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
+import jakarta.enterprise.context.*;
+import jakarta.inject.*;
+import org.primefaces.*;
+import org.primefaces.context.*;
+import org.primefaces.event.*;
 
 @Named
 @RequestScoped
-public class BookRatingBean {
+public class BookRatingBean
+{
+  private String bookName;
 
-    private String bookName;
+  public void onrate(RateEvent rateEvent)
+  {
+    PrimeFaces.current().dialog().closeDynamic(rateEvent.getRating());
+  }
 
-    public void onrate(RateEvent rateEvent) {
-        RequestContext.getCurrentInstance().closeDialog(rateEvent.getRating());
-    }
+  public void oncancel()
+  {
+    PrimeFaces.current().dialog().closeDynamic(0);
+  }
 
-    public void oncancel() {
-        RequestContext.getCurrentInstance().closeDialog(0);
-    }
+  public String getBookName()
+  {
+    return bookName;
+  }
 
-    public String getBookName() {
-        return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
+  public void setBookName(String bookName)
+  {
+    this.bookName = bookName;
+  }
 }

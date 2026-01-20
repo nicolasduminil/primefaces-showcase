@@ -1,56 +1,49 @@
 package fr.simplex_software.workshop.primefaces_showcase.model.chapter5;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-/**
- * Created by mertcaliskan
- * on 03/03/15.
- */
-public class Boxer implements Serializable {
+public class Boxer implements Serializable
+{
+  private String name;
+  private List<Stat> stats = new ArrayList<Stat>();
 
-    private String name;
+  public Boxer(String name)
+  {
+    this.name = name;
+  }
 
-    private List<Stat> stats = new ArrayList<Stat>();
+  public String getName()
+  {
+    return name;
+  }
 
-    public Boxer(String name) {
-        this.name = name;
-    }
+  public void setName(String name)
+  {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public List<Stat> getStats()
+  {
+    return stats;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setStats(List<Stat> stats)
+  {
+    this.stats = stats;
+  }
 
-    public List<Stat> getStats() {
-        return stats;
-    }
+  public int getAllWins()
+  {
+    return stats.stream()
+      .mapToInt(Stat::getWin)
+      .sum();
+  }
 
-    public void setStats(List<Stat> stats) {
-        this.stats = stats;
-    }
-
-    public int getAllWins() {
-        int sum = 0;
-
-        for(Stat s : stats) {
-            sum += s.getWin();
-        }
-
-        return sum;
-    }
-
-    public int getAllLosses() {
-        int sum = 0;
-
-        for(Stat s : stats) {
-            sum += s.getLoss();
-        }
-
-        return sum;
-    }
+  public int getAllLosses()
+  {
+    return stats.stream()
+      .mapToInt(Stat::getLoss)
+      .sum();
+  }
 }
