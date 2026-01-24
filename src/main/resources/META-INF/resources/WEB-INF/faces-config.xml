@@ -7,7 +7,7 @@
   <application>
     <locale-config>
       <default-locale>en</default-locale>
-      <supported-locale>tr_TR</supported-locale>
+      <supported-locale>fr_FR</supported-locale>
     </locale-config>
     <resource-bundle>
       <base-name>messages</base-name>
@@ -28,11 +28,9 @@
       org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
     </el-resolver>
   </application>
-
   <factory>
     <exception-handler-factory>
       org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory
     </exception-handler-factory>
   </factory>
-
 </faces-config>

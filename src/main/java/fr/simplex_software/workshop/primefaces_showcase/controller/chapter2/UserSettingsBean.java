@@ -4,6 +4,7 @@ import fr.simplex_software.workshop.primefaces_showcase.model.chapter2.*;
 import jakarta.annotation.*;
 import jakarta.enterprise.context.*;
 import jakarta.inject.*;
+import org.primefaces.*;
 
 import java.beans.*;
 import java.io.*;
@@ -55,6 +56,21 @@ public class UserSettingsBean implements Serializable
       "Vader"
     };
 
+  @PostConstruct
+  public void init()
+  {
+    for (String th : THEMES)
+      themes.put(th, Introspector.decapitalize(th));
+    for (Map.Entry<String, String> theme : themes.entrySet())
+      availableThemes.add(new Theme(theme.getKey(), theme.getValue()));
+    theme = availableThemes.get(18);
+  }
+
+  public void saveTheme()
+  {
+    PrimeFaces.current().ajax().addCallbackParam("theme", this.theme.getName());
+  }
+
   private Map<String, String> themes = new TreeMap<>();
   private List<Theme> availableThemes = new ArrayList<Theme>();
   private Theme theme;
@@ -77,15 +93,5 @@ public class UserSettingsBean implements Serializable
   public void setTheme(Theme theme)
   {
     this.theme = theme;
-  }
-
-  @PostConstruct
-  public void init()
-  {
-    for (String th : THEMES)
-      themes.put(th, Introspector.decapitalize(th));
-    for (Map.Entry<String, String> theme : themes.entrySet())
-      availableThemes.add(new Theme(theme.getKey(), theme.getValue()));
-    theme = availableThemes.get(18);
   }
 }

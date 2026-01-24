@@ -1,13 +1,12 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-    <f:view contentType="text/html">
-        <h:head />
-        <h:body>
-            <h:form>
-                <p:spinner />
-            </h:form>
-        </h:body>
-    </f:view>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Your first page with PrimeFaces components</h3>
+    <h:form>
+      <p:spinner size="3"/>
+    </h:form>
+  </ui:define>
+</ui:composition>

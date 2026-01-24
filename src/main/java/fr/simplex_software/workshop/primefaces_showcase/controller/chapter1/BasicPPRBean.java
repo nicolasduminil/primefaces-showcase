@@ -4,16 +4,18 @@ import jakarta.faces.view.*;
 import jakarta.inject.*;
 
 import java.io.*;
+import java.time.*;
+import java.time.format.*;
 
 @Named
 @ViewScoped
 public class BasicPPRBean implements Serializable
 {
-  private String value;
-
+  private String value ;
+  private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
   public String updateValue()
   {
-    value = String.valueOf(System.currentTimeMillis());
+    value = String.valueOf(formatter.format(LocalDateTime.now()));
     return null;
   }
 

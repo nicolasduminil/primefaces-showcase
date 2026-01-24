@@ -1,16 +1,20 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-    <f:view contentType="text/html">
-        <h:head />
-        <h:body>
-            <h:form id="form1">
-                <p:commandButton update=":form2:display" action="#{basicPPRBean.updateValue}" value="Update" />
-            </h:form>
-            <h:form id="form2">
-                <h:outputText id="display" value="#{basicPPRBean.value}"/>
-            </h:form>
-        </h:body>
-    </f:view>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Cross naming container update</h3>
+    <f:subview id="form1">
+      <p:commandButton update="@([id$=display])" action="#{basicPPRBean.updateValue}"
+                       value="Update" process="@form"/>
+      <span class="ui-separator">
+        <span class="ui-icon pi pi-chevron-circle-right" />
+      </span>
+    </f:subview>
+    <f:subview id="form2">
+      <h:outputText id="display" value="#{basicPPRBean.value}"/>
+    </f:subview>
+  </ui:define>
+</ui:composition>

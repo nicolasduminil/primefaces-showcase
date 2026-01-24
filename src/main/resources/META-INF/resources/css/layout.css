@@ -58,12 +58,21 @@ button,
     padding: 120px 10px 0 40px;
 }
 
-.slogan {
+/*.slogan {
     position: absolute;
     color: #A2A1A1;
     font-weight: bold;
     bottom: 30px;
     right: 40px;
+}*/
+.slogan {
+    color: #2196F3;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: 1px;
+    margin: 20px 0 15px 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 table .formLabel,
