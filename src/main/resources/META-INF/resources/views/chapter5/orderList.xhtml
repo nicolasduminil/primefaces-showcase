@@ -32,7 +32,7 @@
             <h:outputText value="POJO Support" />
             <p:orderList id="pojo" value="#{orderListBean.cars}" var="car"
                          itemValue="#{car}">
-                <f:converter converterId="org.primefaces.cookbook.converter.CarConverter" />
+                <f:converter converterId="fr.simplex_software.workshop.primefaces_showcase.converter.CarConverter" />
                 <f:facet name="caption">Cars</f:facet>
                 <p:column>
                     <p:graphicImage value="/resources/images/autocomplete/#{car.name}.png" width="40" height="30"/>

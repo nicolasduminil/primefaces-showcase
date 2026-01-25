@@ -25,7 +25,7 @@
         <p:commandButton ajax="false" value="Throw ViewExpiredException"
                          action="#{exceptionHandlerBean.throwViewExpiredException}"/>
 
-        <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
+        <p:ajaxExceptionHandler type="jakarta.facesapplication.ViewExpiredException"
                                 update="expDialog"
                                 onexception="PF('exceptionDialog').show();"/>
 

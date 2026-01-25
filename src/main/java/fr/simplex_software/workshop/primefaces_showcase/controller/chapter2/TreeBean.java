@@ -13,36 +13,35 @@ import java.io.Serializable;
 @ViewScoped
 public class TreeBean implements Serializable
 {
-  private final TreeNode<BookTreeNode> root;
+  private final TreeNode<String> root;
 
   public TreeBean()
   {
-    root = new DefaultTreeNode<>(new BookTreeNode("root", null), null);
+    root = new DefaultTreeNode<>("Root", null);
 
-    TreeNode<BookTreeNode> n0 = createNode("Tree node 0", root, true);
-    TreeNode<BookTreeNode> n00 = createNode("Tree node 0.0", n0, true);
+    TreeNode<String> n0 = createNode("Tree node 0", root, true);
+    TreeNode<String> n00 = createNode("Tree node 0.0", n0, true);
     createNode("Tree node 0.0.0", n00, true);
     createNode("Tree node 0.0.1", n00, false);
     createNode("Tree node 0.1", n0, false);
     createNode("Tree node 0.1.0", n0, false);
 
-    TreeNode<BookTreeNode> n1 = createNode("Tree node 1", root, false);
-    TreeNode<BookTreeNode> n10 = createNode("Tree node 1.0", n1, false);
+    TreeNode<String> n1 = createNode("Tree node 1", root, false);
+    TreeNode<String> n10 = createNode("Tree node 1.0", n1, false);
     createNode("Tree node 1.0.0", n10, false);
     createNode("Tree node 1.1", n1, false);
 
     createNode("Tree node 2", root, false);
   }
 
-  public TreeNode<BookTreeNode> getRoot()
+  public TreeNode<String> getRoot()
   {
     return root;
   }
 
-  private TreeNode<BookTreeNode> createNode(String label, TreeNode<BookTreeNode> parent, boolean expanded)
+  private TreeNode<String> createNode(String label, TreeNode<String> parent, boolean expanded)
   {
-    TreeNode<BookTreeNode> node =
-      new DefaultTreeNode<>(new BookTreeNode(label, parent.getData().getView()), parent);
+    TreeNode<String> node = new DefaultTreeNode<>(label, parent);
     node.setExpanded(expanded);
     return node;
   }

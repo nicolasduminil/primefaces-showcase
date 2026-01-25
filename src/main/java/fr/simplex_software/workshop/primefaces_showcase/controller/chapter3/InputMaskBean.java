@@ -9,7 +9,6 @@ import java.io.*;
 @ViewScoped
 public class InputMaskBean implements Serializable
 {
-
   private String phone;
   private String phone2;
   private String phoneExt;
