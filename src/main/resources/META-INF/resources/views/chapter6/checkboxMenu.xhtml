@@ -1,42 +1,43 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
                 template="/templates/masterLayout.xhtml">
-    <ui:define name="chapterItem">
+  <ui:define name="chapterItem">
 
-        <h3 style="margin-top:0">Simple SelectCheckboxMenu</h3>
+    <h3 style="margin-top:0">Simple SelectCheckboxMenu</h3>
 
-        <p:selectCheckboxMenu label="Colors"
-                              value="#{checkboxMenuBean.selectedColors}">
-            <f:selectItems value="#{checkboxMenuBean.colors}"/>
-        </p:selectCheckboxMenu>
+    <p:selectCheckboxMenu label="Colors"
+                          value="#{checkboxMenuBean.selectedColors}">
+      <f:selectItems value="#{checkboxMenuBean.colors}"/>
+    </p:selectCheckboxMenu>
 
-        <h3 style="margin-top:20px">
-            Advanced SelectCheckboxMenu with filter and converter
-        </h3>
+    <h3 style="margin-top:20px">
+      Advanced SelectCheckboxMenu with filter and converter
+    </h3>
 
-        <p:selectCheckboxMenu label="Languages" filter="true"
-                              value="#{checkboxMenuBean.selectedLanguages}">
-            <f:selectItems value="#{checkboxMenuBean.languages}"/>
-            <f:converter
-                    converterId="fr.simplex_software.workshop.primefaces_showcase.converter.LocaleConverter"/>
-        </p:selectCheckboxMenu>
+    <p:selectCheckboxMenu label="Languages" filter="true"
+                          value="#{checkboxMenuBean.selectedLanguages}">
+      <f:selectItems value="#{checkboxMenuBean.languages}"/>
+      <f:converter
+        converterId="fr.simplex_software.workshop.primefaces_showcase.converter.LocaleConverter"/>
+    </p:selectCheckboxMenu>
 
-        <p:commandButton value="Submit" update="display"
-                         oncomplete="PF('dlg').show()"
-                         style="margin-top:20px; display:block;"/>
+    <p:commandButton value="Submit" update="display"
+                     oncomplete="PF('dlg').show()"
+                     style="margin-top:20px; display:block;"/>
 
-        <p:dialog header="Selected colors and languages" widgetVar="dlg">
-            <h:panelGroup id="display">
-                <p:dataList value="#{checkboxMenuBean.selectedColors}" var="color">
-                    #{color}
-                </p:dataList>
-                <p:dataList value="#{checkboxMenuBean.selectedLanguages}" var="lang">
-                    #{lang}
-                </p:dataList>
-            </h:panelGroup>
-        </p:dialog>
+    <p:dialog header="Selected colors and languages" widgetVar="dlg">
+      <h:panelGroup id="display">
+        <p:dataList value="#{checkboxMenuBean.selectedColors}" var="color">
+          #{color}
+        </p:dataList>
+        <p:dataList value="#{checkboxMenuBean.selectedLanguages}" var="lang">
+          #{lang}
+        </p:dataList>
+      </h:panelGroup>
+    </p:dialog>
 
-    </ui:define>
+  </ui:define>
 </ui:composition>

@@ -4,7 +4,6 @@
       xmlns:h="jakarta.faces.html"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:p="http://primefaces.org/ui">
-
 <f:view contentType="text/html" locale="en">
   <h:head>
     <title>PrimeFaces with Quarkus ShowCase</title>
@@ -25,7 +24,7 @@
           <p:commandButton type="button" value="Home" icon="pi pi-home" styleClass="ui-button-flat"/>
 
           <span class="ui-separator">
-            <span class="ui-icon pi pi-ellipsis-v" />
+            <span class="ui-icon pi pi-ellipsis-v"/>
           </span>
 
           <p:outputLabel for="themeSwitcher" value="Theme: " style="margin-left: 10px; margin-right: 5px"/>
@@ -41,13 +40,14 @@
           </p:selectOneMenu>
 
           <span class="ui-separator">
-            <span class="ui-icon pi pi-ellipsis-v" />
+            <span class="ui-icon pi pi-ellipsis-v"/>
           </span>
 
           <p:menuButton value="Project Links" style="margin-left: 5px">
-            <p:menuitem value="PrimeFaces Docs" url="https://www.primefaces.org/documentation/" icon="pi pi-external-link"/>
+            <p:menuitem value="PrimeFaces Docs" url="https://www.primefaces.org/documentation/"
+                        icon="pi pi-external-link"/>
             <p:menuitem value="Quarkus Guide" url="https://quarkus.io/guides/" icon="pi pi-external-link"/>
-            <p:separator />
+            <p:separator/>
             <p:menuitem value="About" icon="pi pi-info-circle"/>
           </p:menuButton>
         </f:facet>

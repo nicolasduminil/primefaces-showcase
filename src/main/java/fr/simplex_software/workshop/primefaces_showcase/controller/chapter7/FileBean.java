@@ -1,6 +1,8 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter7;
 
 import fr.simplex_software.workshop.primefaces_showcase.utils.*;
+import jakarta.faces.application.*;
+import jakarta.faces.context.*;
 import jakarta.faces.view.*;
 import jakarta.inject.*;
 import org.primefaces.event.*;
@@ -29,11 +31,13 @@ public class FileBean implements Serializable
 
   public UploadedFile getFile()
   {
+    System.out.println(">>> getFile(): " + file.getFileName());
     return file;
   }
 
   public void setFile(UploadedFile file)
   {
+    System.out.println(">>> setFile: " + file.getFileName());
     this.file = file;
   }
 
@@ -59,6 +63,7 @@ public class FileBean implements Serializable
 
   public void handleFileUpload(FileUploadEvent event)
   {
+    System.out.println(">>> handleFileUpload: " + event.getFile().getFileName());
     MessageUtil.addInfoMessage("upload.successful",
       "%s is uploaded.".formatted(event.getFile().getFileName()));
   }
@@ -66,5 +71,13 @@ public class FileBean implements Serializable
   public StreamedContent getDownloadFile()
   {
     return downloadFile;
+  }
+
+  public void upload()
+  {
+    System.out.println(">>> upload: " + (file != null ? file.getFileName() : "no file"));
+    if (file != null)
+      FacesContext.getCurrentInstance().addMessage(null,
+        new FacesMessage("Successful",  "%s is uploaded.".formatted(file.getFileName())));
   }
 }

@@ -27,8 +27,8 @@ public class ParametrizedCommandBean implements Serializable
     item.setCommand("#{parametrizedCommandBean.command}");
     item.setUpdate("growl");
     item.setIcon("ui-icon-play");
-    item.setParam("book", "PrimeFaces Cookbook");
-    item.setParam("edition", "Second Edition");
+    item.setParam("book", "PrimeFaces with Quarkus");
+    item.setParam("edition", "2026 Showcase");
     model.getElements().add(item);
   }
 

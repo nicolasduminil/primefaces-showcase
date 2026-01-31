@@ -13,45 +13,44 @@ import java.io.*;
 @ViewScoped
 public class TreeDataBean implements Serializable
 {
+  private final TreeNode<String> root;
+  private final TreeNode<String> root2;
+  private final TreeNode<String> rootWithType;
 
-  private final TreeNode<BookTreeNode> root;
-  private final TreeNode<BookTreeNode> root2;
-  private final TreeNode<BookTreeNode> rootWithType;
-
-  private TreeNode<BookTreeNode> selectedNode;
-  private TreeNode<BookTreeNode> selectedNode1;
-  private TreeNode<BookTreeNode> selectedNode2;
-  private TreeNode<BookTreeNode>[] selectedNodes;
+  private TreeNode<String> selectedNode;
+  private TreeNode<String> selectedNode1;
+  private TreeNode<String> selectedNode2;
+  private TreeNode<String>[] selectedNodes;
 
   public TreeDataBean()
   {
-    root = new DefaultTreeNode<>(new BookTreeNode("root", null), null);
-    TreeNode<BookTreeNode> node1 = createNode("Node1", root);
-    TreeNode<BookTreeNode> node2 = createNode("Node2", root);
+    root = new DefaultTreeNode<>("Root", null);
+    TreeNode<String> node1 = createNode("Node1", root);
+    TreeNode<String> node2 = createNode("Node2", root);
 
     createNode("Node1.1", node1);
     createNode("Node1.2", node1);
 
-    TreeNode<BookTreeNode> node21 = createNode("Node2.1", node2);
+    TreeNode<String> node21 = createNode("Node2.1", node2);
     createNode("Node2.1.1", node21);
 
-    root2 = new DefaultTreeNode<>(new BookTreeNode("root2", null), null);
-    TreeNode<BookTreeNode> t2_node1 = createNode("Node1", root2);
-    TreeNode<BookTreeNode> t2_node2 = createNode("Node2", root2);
+    root2 = new DefaultTreeNode<>("Root", null);
+    TreeNode<String> t2_node1 = createNode("Node1", root2);
+    TreeNode<String> t2_node2 = createNode("Node2", root2);
 
     createNode("Node1.1", t2_node1);
     createNode("Node1.2", t2_node1);
 
-    TreeNode<BookTreeNode> t2_node21 = createNode("Node2.1", t2_node2);
+    TreeNode<String> t2_node21 = createNode("Node2.1", t2_node2);
     createNode("Node2.1.1", t2_node21);
-    rootWithType = new DefaultTreeNode<>(new BookTreeNode("node", "Root"), null);
-    TreeNode<BookTreeNode> node1_type = createNode("node", "Node1", rootWithType);
-    TreeNode<BookTreeNode> node2_type = createNode("node", "Node2", rootWithType);
+    rootWithType = new DefaultTreeNode<>("node", "Root", null);
+    TreeNode<String> node1_type = createNode("node", "Node1", rootWithType);
+    TreeNode<String> node2_type = createNode("node", "Node2", rootWithType);
 
     createNode("leaf", "Node1.1", node1_type);
     createNode("leaf", "Node1.2", node1_type);
 
-    TreeNode<BookTreeNode> node21_type = createNode("node", "Node2.1", node2_type);
+    TreeNode<String> node21_type = createNode("node", "Node2.1", node2_type);
     createNode("leaf", "Node2.1.1", node21_type);
   }
 
@@ -59,16 +58,16 @@ public class TreeDataBean implements Serializable
   {
     if (selectedNode != null)
     {
-      MessageUtil.addInfoMessageWithoutKey("Selected", selectedNode.getData().toString());
+      MessageUtil.addInfoMessageWithoutKey("Selected", selectedNode.getData());
     }
 
     if (selectedNodes != null && selectedNodes.length > 0)
     {
       StringBuilder builder = new StringBuilder();
 
-      for (TreeNode<BookTreeNode> node : selectedNodes)
+      for (TreeNode<String> node : selectedNodes)
       {
-        builder.append(node.getData().toString());
+        builder.append(node.getData());
         builder.append("<br />");
       }
 
@@ -108,68 +107,68 @@ public class TreeDataBean implements Serializable
     selectedNode = null;
   }
 
-  public TreeNode<BookTreeNode> getRoot()
+  public TreeNode<String> getRoot()
   {
     return root;
   }
 
-  public TreeNode<BookTreeNode> getRoot2()
+  public TreeNode<String> getRoot2()
   {
     return root2;
   }
 
-  public TreeNode<BookTreeNode> getRootWithType()
+  public TreeNode<String> getRootWithType()
   {
     return rootWithType;
   }
 
-  public TreeNode<BookTreeNode> getSelectedNode()
+  public TreeNode<String> getSelectedNode()
   {
     return selectedNode;
   }
 
-  public void setSelectedNode(TreeNode<BookTreeNode> selectedNode)
+  public void setSelectedNode(TreeNode<String> selectedNode)
   {
     this.selectedNode = selectedNode;
   }
 
-  public TreeNode<BookTreeNode> getSelectedNode1()
+  public TreeNode<String> getSelectedNode1()
   {
     return selectedNode1;
   }
 
-  public void setSelectedNode1(TreeNode<BookTreeNode> selectedNode1)
+  public void setSelectedNode1(TreeNode<String> selectedNode1)
   {
     this.selectedNode1 = selectedNode1;
   }
 
-  public TreeNode<BookTreeNode> getSelectedNode2()
+  public TreeNode<String> getSelectedNode2()
   {
     return selectedNode2;
   }
 
-  public void setSelectedNode2(TreeNode<BookTreeNode> selectedNode2)
+  public void setSelectedNode2(TreeNode<String> selectedNode2)
   {
     this.selectedNode2 = selectedNode2;
   }
 
-  public TreeNode<BookTreeNode>[] getSelectedNodes()
+  public TreeNode<String>[] getSelectedNodes()
   {
     return selectedNodes;
   }
 
-  public void setSelectedNodes(TreeNode<BookTreeNode>[] selectedNodes)
+  public void setSelectedNodes(TreeNode<String>[] selectedNodes)
   {
     this.selectedNodes = selectedNodes;
   }
 
-  private TreeNode<BookTreeNode> createNode(String label, TreeNode<BookTreeNode> parent)
+  private TreeNode<String> createNode(String label, TreeNode<String> parent)
   {
-    return new DefaultTreeNode<>(new BookTreeNode("node", label), parent);
+    return new DefaultTreeNode<>(label, parent);
   }
 
-  private TreeNode<BookTreeNode> createNode(String type, String label, TreeNode<BookTreeNode> parent)
+  private TreeNode<String> createNode(String type, String label, TreeNode<String> parent)
   {
-    return new DefaultTreeNode<>(new BookTreeNode(type, label), parent);
+    return new DefaultTreeNode<>(type, label, parent);
   }
 }

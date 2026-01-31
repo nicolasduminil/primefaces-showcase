@@ -1,134 +1,134 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="jakarta.faces.html"
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/masterLayout.xhtml">
-    <ui:define name="chapterItem">
-        <h3 style="margin-top:0">Exporting data in various formats</h3>
-        <p:growl id="growl" showDetail="true"/>
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Exporting data in various formats</h3>
+    <p:growl id="growl" showDetail="true"/>
 
-        <script type="text/javascript">
-            function showStatus() {
-                PF('statusDialog').show();
-            }
-            function hideStatus() {
-                PF('statusDialog').hide();
-            }
-        </script>
+    <script type="text/javascript">
+      function showStatus() {
+        PF('statusDialog').show();
+      }
 
-        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false">
-            <p:graphicImage value="/resources/images/ajax-loader.gif" />
-        </p:dialog>
+      function hideStatus() {
+        PF('statusDialog').hide();
+      }
+    </script>
 
-        <h:panelGrid columns="2" cellpadding="5">
+    <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false">
+      <p:graphicImage value="/resources/images/ajax-loader.gif"/>
+    </p:dialog>
 
-            <h:outputText value="Data Export" />
-            <h:panelGrid columns="1">
+    <h:panelGrid columns="2" cellpadding="5">
 
-                <p:dataTable id="countriesTable" var="country" value="#{dataExportBean.countries}"
-                             rowKey="#{country}" rows="10" paginator="true" style="width: 400px"
-                             selectionMode="multiple" selection="#{dataExportBean.selectedCountries}">
-                    <p:column headerText="Name">
-                        <h:outputText value="#{country}" />
-                    </p:column>
-                </p:dataTable>
+      <h:outputText value="Data Export"/>
+      <h:panelGrid columns="1">
 
-                <h:panelGrid columns="5">
-                    <h:panelGrid columns="2">
-                        <p:panel header="Export All Data">
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/excel.png" />
-                                <p:dataExporter type="xls" target="countriesTable" fileName="countries" />
-                            </h:commandLink>
+        <p:dataTable id="countriesTable" var="country" value="#{dataExportBean.countries}"
+                     rowKey="#{country}" rows="10" paginator="true" style="width: 400px"
+                     selectionMode="multiple" selection="#{dataExportBean.selectedCountries}">
+          <p:column headerText="Name">
+            <h:outputText value="#{country}"/>
+          </p:column>
+        </p:dataTable>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/pdf.png" />
-                                <p:dataExporter type="pdf" target="countriesTable" fileName="countries" />
-                            </h:commandLink>
+        <h:panelGrid columns="5">
+          <p:panel header="Export All Data">
+            <h:panelGroup layout="block" style="margin-bottom:10px;">
+              <h:commandLink>
+                <h:graphicImage name="images/export/excel.png"/>
+                <p:dataExporter type="xls" target="countriesTable" fileName="countries"/>
+              </h:commandLink>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/csv.png" />
-                                <p:dataExporter type="csv" target="countriesTable" fileName="countries" />
-                            </h:commandLink>
+              <h:commandLink>
+                <p:graphicImage name="images/export/pdf.png"/>
+                <p:dataExporter type="pdf" target="countriesTable" fileName="countries"/>
+              </h:commandLink>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/xml.png" />
-                                <p:dataExporter type="xml" target="countriesTable" fileName="countries" />
-                            </h:commandLink>
-                        </p:panel>
-                    </h:panelGrid>
+              <h:commandLink>
+                <p:graphicImage name="images/export/csv.png"/>
+                <p:dataExporter type="csv" target="countriesTable" fileName="countries"/>
+              </h:commandLink>
 
-                    <h:panelGrid columns="2">
-                        <p:panel header="Export Page Data">
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/excel.png" />
-                                <p:dataExporter type="xls" target="countriesTable" fileName="countries" pageOnly="true" />
-                            </h:commandLink>
+              <h:commandLink>
+                <p:graphicImage name="images/export/xml.png"/>
+                <p:dataExporter type="xml" target="countriesTable" fileName="countries"/>
+              </h:commandLink>
+            </h:panelGroup>
+          </p:panel>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/pdf.png" />
-                                <p:dataExporter type="pdf" target="countriesTable" fileName="countries" pageOnly="true" />
-                            </h:commandLink>
+            <p:panel header="Export Page Data">
+              <h:panelGroup layout="block" style="margin-bottom:10px;">
+              <h:commandLink>
+                <p:graphicImage name="images/export/excel.png"/>
+                <p:dataExporter type="xls" target="countriesTable" fileName="countries" pageOnly="true"/>
+              </h:commandLink>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/csv.png" />
-                                <p:dataExporter type="csv" target="countriesTable" fileName="countries" pageOnly="true" />
-                            </h:commandLink>
+              <h:commandLink>
+                <p:graphicImage name="images/export/pdf.png"/>
+                <p:dataExporter type="pdf" target="countriesTable" fileName="countries" pageOnly="true"/>
+              </h:commandLink>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/xml.png" />
-                                <p:dataExporter type="xml" target="countriesTable" fileName="countries" pageOnly="true" />
-                            </h:commandLink>
-                        </p:panel>
-                    </h:panelGrid>
+              <h:commandLink>
+                <p:graphicImage name="images/export/csv.png"/>
+                <p:dataExporter type="csv" target="countriesTable" fileName="countries" pageOnly="true"/>
+              </h:commandLink>
 
-                    <h:panelGrid columns="2">
-                        <p:panel header="Export Selection Only">
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/excel.png" />
-                                <p:dataExporter type="xls" target="countriesTable" fileName="countries" selectionOnly="true" />
-                            </h:commandLink>
+              <h:commandLink>
+                <p:graphicImage name="images/export/xml.png"/>
+                <p:dataExporter type="xml" target="countriesTable" fileName="countries" pageOnly="true"/>
+              </h:commandLink>
+              </h:panelGroup>
+            </p:panel>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/pdf.png" />
-                                <p:dataExporter type="pdf" target="countriesTable" fileName="countries" selectionOnly="true" />
-                            </h:commandLink>
+            <p:panel header="Export Selection Only">
+              <h:panelGroup layout="block" style="margin-bottom:10px;">
+              <h:commandLink>
+                <p:graphicImage name="images/export/excel.png"/>
+                <p:dataExporter type="xls" target="countriesTable" fileName="countries" selectionOnly="true"/>
+              </h:commandLink>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/csv.png" />
-                                <p:dataExporter type="csv" target="countriesTable" fileName="countries" selectionOnly="true" />
-                            </h:commandLink>
+              <h:commandLink>
+                <p:graphicImage name="images/export/pdf.png"/>
+                <p:dataExporter type="pdf" target="countriesTable" fileName="countries" selectionOnly="true"/>
+              </h:commandLink>
 
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/xml.png" />
-                                <p:dataExporter type="xml" target="countriesTable" fileName="countries" selectionOnly="true" />
-                            </h:commandLink>
-                        </p:panel>
-                    </h:panelGrid>
+              <h:commandLink>
+                <p:graphicImage name="images/export/csv.png"/>
+                <p:dataExporter type="csv" target="countriesTable" fileName="countries" selectionOnly="true"/>
+              </h:commandLink>
 
-                    <h:panelGrid columns="2">
-                        <p:panel header="With PreProcess">
-                            <h:commandLink>
-                                <p:graphicImage value="/resources/images/export/pdf.png" />
-                                <p:dataExporter type="pdf" target="countriesTable" fileName="countries"
-                                                preProcessor="#{dataExportBean.preProcessPDF}" />
-                            </h:commandLink>
-                        </p:panel>
-                    </h:panelGrid>
+              <h:commandLink>
+                <p:graphicImage name="images/export/xml.png"/>
+                <p:dataExporter type="xml" target="countriesTable" fileName="countries" selectionOnly="true"/>
+              </h:commandLink>
+              </h:panelGroup>
+            </p:panel>
 
-                    <h:panelGrid columns="2">
-                        <p:panel header="With Monitoring">
-                            <h:commandLink onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
-                                <p:graphicImage value="/resources/images/export/csv.png" />
-                                <p:dataExporter type="csv" target="countriesTable" fileName="countries" />
-                            </h:commandLink>
-                        </p:panel>
-                    </h:panelGrid>
+            <p:panel header="With PreProcess">
+              <h:panelGroup layout="block" style="margin-bottom:10px;">
+              <h:commandLink>
+                <p:graphicImage name="images/export/pdf.png"/>
+                <p:dataExporter type="pdf" target="countriesTable" fileName="countries"
+                                preProcessor="#{dataExportBean.preProcessPDF}"/>
+              </h:commandLink>
+              </h:panelGroup>
+            </p:panel>
 
-                </h:panelGrid>
-            </h:panelGrid>
+            <p:panel header="With Monitoring">
+              <h:panelGroup layout="block" style="margin-bottom:10px;">
+              <h:commandLink onclick="PrimeFaces.monitorDownload(showStatus, hideStatus)">
+                <p:graphicImage name="images/export/csv.png"/>
+                <p:dataExporter type="csv" target="countriesTable" fileName="countries"/>
+              </h:commandLink>
+              </h:panelGroup>
+            </p:panel>
 
         </h:panelGrid>
-    </ui:define>
+      </h:panelGrid>
+
+    </h:panelGrid>
+  </ui:define>
 </ui:composition>

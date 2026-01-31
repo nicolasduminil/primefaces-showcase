@@ -9,7 +9,7 @@ import org.apache.commons.lang3.*;
 import java.io.*;
 import java.util.*;
 
-@FacesConverter(value = "fr.simplex_software.workshop.primefaces_showcaseconverter.LocaleConverter")
+@FacesConverter(value = "fr.simplex_software.workshop.primefaces_showcase.converter.LocaleConverter")
 public class LocaleConverter implements Converter<Locale>, Serializable
 {
   @Override
