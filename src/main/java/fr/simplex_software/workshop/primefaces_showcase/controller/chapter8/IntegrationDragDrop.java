@@ -14,7 +14,7 @@ import java.util.*;
 @ViewScoped
 public class IntegrationDragDrop implements Serializable
 {
-  private final List<Document> availableDocs = new ArrayList<>(List.of (
+  private final List<Document> availableDocs = new ArrayList<>(List.of(
     new Document("Perl script", 120, "Sara Schmidt", getCreationDate(), "perl"),
     new Document("Alex's master thesis", 850, "Alex Konradi", getCreationDate(), "dvi"),
     new Document("jQuery presentation", 687, "Jasper Morgan", getCreationDate(), "ppt"),
@@ -27,7 +27,7 @@ public class IntegrationDragDrop implements Serializable
   ));
   private final List<Document> deletedDocs = new ArrayList<>();
 
-   public List<Document> getAvailableDocs()
+  public List<Document> getAvailableDocs()
   {
     return availableDocs;
   }
@@ -37,12 +37,13 @@ public class IntegrationDragDrop implements Serializable
     return deletedDocs;
   }
 
-  public void onDocumentDrop(DragDropEvent<Document> ddEvent)
+  public void onDocumentDrop(DragDropEvent ddEvent)
   {
-    Document doc = ddEvent.getData();
+    Document doc = (Document)ddEvent.getData();
     deletedDocs.add(doc);
     availableDocs.remove(doc);
   }
+
 
   private Date getCreationDate()
   {
