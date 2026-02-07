@@ -1,18 +1,24 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter9;
 
 import jakarta.annotation.*;
+import jakarta.enterprise.context.*;
+import jakarta.faces.application.*;
+import jakarta.faces.context.*;
 import jakarta.faces.view.*;
 import jakarta.inject.*;
+import org.primefaces.event.*;
 import software.xdev.chartjs.model.charts.*;
+import software.xdev.chartjs.model.color.*;
 import software.xdev.chartjs.model.data.*;
 import software.xdev.chartjs.model.dataset.*;
 import software.xdev.chartjs.model.options.*;
+import software.xdev.chartjs.model.options.elements.*;
 
 import java.io.*;
 import java.util.*;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class ChartBean implements Serializable
 {
   private Chart lineModel;
@@ -29,6 +35,7 @@ public class ChartBean implements Serializable
     areaModel = createAreaModel();
     barModel = createBarModel();
     pieModel = createPieChartModel();
+    combinedModel = createCombinedModel();
   }
 
   private Chart createBarModel()
@@ -96,7 +103,7 @@ public class ChartBean implements Serializable
       .setData(List.of(1000.0, 1170.0, 660.0, 1030.0))
       .setFill(false)
       .setBorderColor("#42A5F5")
-      .setTension(0.1); // Optional: smooths the line
+      .setTension(0.1);
 
     LineDataset expenses = new LineDataset()
       .setLabel("Expenses")
@@ -143,57 +150,66 @@ public class ChartBean implements Serializable
     return liveChartModel.toJson();
   }
 
-  public String getCombinedModel()
+  public Chart createCombinedModel()
   {
     LineDataset sales = new LineDataset()
+      .setType("line")
       .setLabel("Sales")
       .setData(List.of(1000.0, 1170.0, 660.0, 1030.0))
       .setBorderColor("#42A5F5")
       .setFill(false);
 
     BarDataset expenses = new BarDataset()
+      .setType("bar")
       .setLabel("Expenses")
       .setData(List.of(400.0, 460.0, 1120.0, 540.0))
       .setBackgroundColor("#FFA726");
 
-    BarData data = new BarData()
-      .addLabels("2004", "2005", "2006", "2007");
+    MixedData data = new MixedData();
 
-    ((List) data.getDatasets()).add(sales);
+    data.addDataset(sales);
     data.addDataset(expenses);
+    data.setLabels("2004", "2005", "2006", "2007");
 
-    BarChart combinedChart = new BarChart()
+    MixedChart combinedChart = new MixedChart()
       .setData(data)
-      .setOptions(new BarOptions()
+      .setOptions(new Options<>()
+        .setResponsive(true)
+        .setMaintainAspectRatio(false)
         .setPlugins(new Plugins()
-          .setTitle(new Title().setText("Combined Sales & Expenses").setDisplay(true))));
-
-    return combinedChart.toJson();
+          .setTitle(new Title().setText("Combined Sales & Expenses")
+            .setDisplay(true))));
+    return combinedChart;
   }
 
-  public Chart getPieModel()
+  public String getPieModel()
   {
-    return pieModel;
+    return pieModel.toJson();
   }
 
-  public Chart getLineModel()
+  public String getLineModel()
   {
-    return lineModel;
+    return lineModel.toJson();
   }
 
-  public Chart getAreaModel()
+  public String getAreaModel()
   {
-    return areaModel;
+    return areaModel.toJson();
   }
 
-  public Chart getBarModel()
+  public String getBarModel()
   {
-    return barModel;
+    return barModel.toJson();
   }
 
-  public Chart getLiveChartModel()
+  public String getLiveChartModel()
   {
-    return liveChartModel;
+    return liveChartModel.toJson();
+  }
+
+  public String getCombinedModel()
+  {
+    return combinedModel.toJson();
   }
 
   public void setLiveChartModel(Chart liveChartModel)
@@ -204,5 +220,13 @@ public class ChartBean implements Serializable
   public void setCombinedModel(Chart combinedModel)
   {
     this.combinedModel = combinedModel;
+  }
+
+  public void itemSelect(ItemSelectEvent event)
+  {
+    FacesContext.getCurrentInstance().addMessage(null,
+      new FacesMessage(FacesMessage.SEVERITY_INFO, "Item selected",
+      "Value: %s, Item Index: %s, DataSet Index: %s"
+        .formatted(event.getData(), event.getItemIndex(), event.getDataSetIndex())));
   }
 }

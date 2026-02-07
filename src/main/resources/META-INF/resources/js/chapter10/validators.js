@@ -1,5 +1,5 @@
 PrimeFaces.validator['UnicodeValidator'] = {
-    regex: XRegExp("^[\\p{L}-'´`\\s]+$"),
+    regex: XRegExp("^[\\p{L}-'ï¿½`\\s]+$"),
 
     MESSAGE_ID: 'invalid.unicode',
 
@@ -21,7 +21,7 @@ PrimeFaces.validator['ValidCVC'] = {
             PrimeFaces.expressions.SearchExpressionFacade.
                 resolveComponentsAsSelector(forCardMenu).
                     find("select").val() : null;
-
+        alert(selOption);
         var valid = false;
         if (selOption && selOption === 'MCD') {
             // MasterCard
@@ -30,7 +30,7 @@ PrimeFaces.validator['ValidCVC'] = {
             // American Express
             valid = value > 0 && value.toString().length == 4;
         }
-
+        alert(valid);
         if (!valid) {
             throw PrimeFaces.util.ValidationContext.
                 getMessage(this.MESSAGE_ID);

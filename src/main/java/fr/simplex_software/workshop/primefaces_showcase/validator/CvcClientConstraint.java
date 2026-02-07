@@ -6,11 +6,16 @@ import org.primefaces.validate.bean.*;
 
 import java.util.*;
 
-public class CvcClientConstraint implements ClientValidationConstraint
+public class CvcClientConstraint extends AbstractClientValidationConstraint //implements ClientValidationConstraint
 {
-  private static final String CARDMENU_METADATA = "data-forcardmenu";
+  //private static final String CARDMENU_METADATA = "data-forcardmenu";
 
-  @Override
+  public CvcClientConstraint()
+  {
+    super(null, "data-forcardmenu");
+  }
+
+  /*@Override
   public Map<String, Object> getMetadata(ConstraintDescriptor constraintDescriptor)
   {
     Map<String, Object> metadata = new HashMap<>();
@@ -19,12 +24,14 @@ public class CvcClientConstraint implements ClientValidationConstraint
     String forCardMenu = (String) attrs.get("forCardMenu");
     if (StringUtils.isNotBlank(forCardMenu))
       metadata.put(CARDMENU_METADATA, forCardMenu);
+    System.out.println(">>> CvcClientConstraint.getMetadata() : forCardMenu = " + forCardMenu);
     return metadata;
-  }
+  }*/
 
   @Override
   public String getValidatorId()
   {
+    System.out.println(">>> CvcClientConstraint.getValidatorId() : " + ValidCVC.class.getSimpleName());
     return ValidCVC.class.getSimpleName();
   }
 }

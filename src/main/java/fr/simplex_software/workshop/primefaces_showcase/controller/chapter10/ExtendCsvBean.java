@@ -54,11 +54,13 @@ public class ExtendCsvBean implements Serializable
 
   public Integer getCvc()
   {
+    System.out.printf(">>> ExtendCsvBean.getCvc() : %s%n", cvc == null ? "" : cvc.toString());
     return cvc;
   }
 
   public void setCvc(Integer cvc)
   {
+    System.out.printf(">>> ExtendCsvBean.setCvc() : %s%n", cvc.toString());
     this.cvc = cvc;
   }
 
