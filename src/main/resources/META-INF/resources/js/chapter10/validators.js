@@ -1,12 +1,12 @@
 PrimeFaces.validator['UnicodeValidator'] = {
-    regex: XRegExp("^[\\p{L}-'�`\\s]+$"),
+    regex: /^[-'´`\s\p{L}]+$/u,
 
-    MESSAGE_ID: 'invalid.unicode',
+  MESSAGE_ID: 'invalid.unicode',
 
     validate: function (element, value) {
         if (!this.regex.test(value)) {
             throw PrimeFaces.util.ValidationContext.
-                getMessage(this.MESSAGE_ID, element.data('param'));
+            getMessage(this.MESSAGE_ID, element.data('param'));
         }
     }
 };
@@ -15,25 +15,41 @@ PrimeFaces.validator['ValidCVC'] = {
     MESSAGE_ID: 'invalid.cvc',
 
     validate: function (element, value) {
-        // find out selected menu value
+        alert(value);
+        console.log("ValidCVC called for value:", value);
+
         var forCardMenu = element.data('forcardmenu');
-        var selOption = forCardMenu ?
-            PrimeFaces.expressions.SearchExpressionFacade.
-                resolveComponentsAsSelector(forCardMenu).
-                    find("select").val() : null;
-        alert(selOption);
-        var valid = false;
-        if (selOption && selOption === 'MCD') {
-            // MasterCard
-            valid = value > 0 && value.toString().length == 3;
-        } else if (selOption && selOption === 'AMEX') {
-            // American Express
-            valid = value > 0 && value.toString().length == 4;
+        console.log("forCardMenu selector:", forCardMenu);
+
+        var selOption = null;
+        if (forCardMenu) {
+            try {
+                var component = PrimeFaces.expressions.SearchExpressionFacade.resolveComponentsAsSelector(forCardMenu);
+                if (component.length > 0) {
+                    // p:selectOneMenu renders a hidden select
+                    selOption = component.is('select') ? component.val() : component.find('select').val();
+                }
+            } catch (e) {
+                console.error("Error resolving components for ValidCVC:", e);
+            }
         }
-        alert(valid);
+
+        console.log("Detected card option:", selOption);
+
+        var valid = true;
+        // value might be a string, convert to check length
+        var strValue = value ? value.toString() : "";
+
+        if (selOption === 'MCD') {
+            valid = /^\d{3}$/.test(strValue);
+        } else if (selOption === 'AMEX') {
+            valid = /^\d{4}$/.test(strValue);
+        }
+
+        console.log("Validation result:", valid);
+
         if (!valid) {
-            throw PrimeFaces.util.ValidationContext.
-                getMessage(this.MESSAGE_ID);
+            throw PrimeFaces.util.ValidationContext.getMessage(this.MESSAGE_ID);
         }
     }
 };

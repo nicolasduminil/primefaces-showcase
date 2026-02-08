@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<facelet-taglib version="4.1"
+                xmlns="https://jakarta.ee/xml/ns/jakartaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-facelettaglibrary_4_1.xsd">
+  <namespace>http://simplex-software/workshop/primefaces-showcase</namespace>
+  <tag>
+    <tag-name>validateUnicode</tag-name>
+    <validator>
+      <validator-id>fr.simplex_software.workshop.primefaces_showcase.validator.UnicodeValidator</validator-id>
+    </validator>
+    <attribute>
+      <name>msgparam</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
+</facelet-taglib>

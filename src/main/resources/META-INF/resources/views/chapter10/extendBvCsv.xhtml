@@ -3,39 +3,10 @@
                 xmlns:f="jakarta.faces.core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="jakarta.faces.html"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 template="/templates/masterLayout.xhtml">
-  <ui:define name="head">
-    <script type="text/javascript">
-      //<![CDATA[
-      /**
-       * Bean validator
-       */
-      PrimeFaces.validator['Card'] = {
-
-        pattern: {
-          MCD: /^5[1-5][0-9]{14}$/,
-          AMEX: /^3[47][0-9]{13}$/
-        },
-
-        MESSAGE_ID: 'org.primefaces.examples.validate.card.message',
-
-        validate: function (element, value) {
-          var vc = PrimeFaces.validation.ValidationContext,
-              cardType = element.data('p-card-type');
-
-          if (!this.pattern[cardType].test(value)) {
-            var msgStr = element.data('p-card-msg'),
-                msg = msgStr ? {summary: msgStr, detail: msgStr} : vc.getMessage(this.MESSAGE_ID);
-
-            throw msg;
-          }
-        }
-      };
-      //]]>
-    </script>
-  </ui:define>
   <ui:define name="chapterItem">
-    <h:panelGrid id="pgrid" columns="3" cellpadding="3" style="margin-bottom:10px;">
+    <!--h:panelGrid id="pgrid" columns="3" cellpadding="3" style="margin-bottom:10px;">
       <p:outputLabel for="card" value="Card"/>
       <p:selectOneMenu id="card" styleClass="card" value="#{extendCsvBean.card}">
         <f:selectItem itemLabel="Please select a card" itemValue="#{null}"/>
@@ -44,17 +15,31 @@
       </p:selectOneMenu>
       <p:message for="card"/>
       <p:outputLabel for="cvc" value="CVC"/>
-      <p:inputText id="cvc" value="#{extendCsvBean.cvc}"/>
+      <p:inputText id="cvc" value="#{extendCsvBean.cvc}" validateClient="true"
+                   pt:data-p-validcvc="ValidCVC"
+                   pt:data-forcardmenu="@(.card)">
+        <p:clientValidator event="keyup"/>
+      </p:inputText>
       <p:message for="cvc"/>
     </h:panelGrid>
     <p:commandButton validateClient="true" value="Save"
                      process="@this pgrid" update="pgrid"
-                     action="#{extendCsvBean.save}"/>
+                     action="#{extendCsvBean.save}"/-->
+    <div class="card">
+        <p:growl showDetail="true"/>
+        <h:panelGrid columns="4" cellpadding="7">
+          <p:outputLabel for="cbv" value="Enter : (Bean Validation)"/>
+          <p:inputText id="cbv" value="#{extendCsvBean.cvc}" styleClass="cvc-input-field"/>
+          <p:message for="cbv" display="tooltip"/>
+          <h:outputText value="#{extendCsvBean.cvc}"/>
+        </h:panelGrid>
+        <p:commandButton value="Save" ajax="false" icon="pi pi-check" validateClient="true" styleClass="mt-3" />
+    </div>
+
   </ui:define>
 
-  <!--ui:define name="appResources">
+  <ui:define name="appResources">
     <h:outputScript library="js" name="chapter10/lang_en.js"/>
-    <h:outputScript library="js" name="chapter10/xregexp-all.js"/>
     <h:outputScript library="js" name="chapter10/validators.js"/>
-  </ui:define-->
+  </ui:define>
 </ui:composition>

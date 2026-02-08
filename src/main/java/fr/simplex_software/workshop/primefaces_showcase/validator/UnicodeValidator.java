@@ -10,11 +10,11 @@ import org.primefaces.validate.*;
 import java.io.*;
 import java.util.*;
 
-@FacesValidator("fr.simplex_software.workshop.primefaces_showcase.UnicodeValidator")
+@FacesValidator("fr.simplex_software.workshop.primefaces_showcase.validator.UnicodeValidator")
 public class UnicodeValidator implements Validator<Object>, ClientValidator, Serializable
 {
   private static final String MESSAGE_METADATA = "data-param";
-  private static final String REGEX = "[\\p{L}\\-'�`\\s]+";
+  private static final String REGEX = "[\\p{L}'´`\\s-]+";
 
   private String msgparam;
 

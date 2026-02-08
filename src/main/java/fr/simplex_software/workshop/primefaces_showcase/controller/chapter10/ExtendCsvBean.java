@@ -1,6 +1,7 @@
 package fr.simplex_software.workshop.primefaces_showcase.controller.chapter10;
 
 import fr.simplex_software.workshop.primefaces_showcase.validator.*;
+import io.quarkus.runtime.annotations.*;
 import jakarta.faces.view.*;
 import jakarta.inject.*;
 import jakarta.validation.constraints.*;
@@ -11,6 +12,7 @@ import java.io.*;
 
 @Named
 @ViewScoped
+@RegisterForReflection
 public class ExtendCsvBean implements Serializable
 {
   private String firstName;
@@ -19,8 +21,8 @@ public class ExtendCsvBean implements Serializable
   @NotNull
   private String card;
   @NotNull
-  @ValidCVC(forCardMenu = "@(.card)")
-  private Integer cvc;
+  @ValidCVC(forCardMenu = "@@(#cbv)")
+  private String cvc;
 
   public String getFirstName()
   {
@@ -52,15 +54,13 @@ public class ExtendCsvBean implements Serializable
     this.card = card;
   }
 
-  public Integer getCvc()
+  public String getCvc()
   {
-    System.out.printf(">>> ExtendCsvBean.getCvc() : %s%n", cvc == null ? "" : cvc.toString());
     return cvc;
   }
 
-  public void setCvc(Integer cvc)
+  public void setCvc(String cvc)
   {
-    System.out.printf(">>> ExtendCsvBean.setCvc() : %s%n", cvc.toString());
     this.cvc = cvc;
   }
 

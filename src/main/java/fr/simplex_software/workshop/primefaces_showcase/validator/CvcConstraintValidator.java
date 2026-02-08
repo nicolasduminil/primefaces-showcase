@@ -1,8 +1,11 @@
 package fr.simplex_software.workshop.primefaces_showcase.validator;
 
+import io.quarkus.runtime.annotations.*;
 import jakarta.validation.*;
+import org.apache.myfaces.util.lang.*;
 
-public class CvcConstraintValidator implements ConstraintValidator<ValidCVC, Integer>
+@RegisterForReflection
+public class CvcConstraintValidator implements ConstraintValidator<ValidCVC, String>
 {
   @Override
   public void initialize(ValidCVC validCVC)
@@ -10,15 +13,14 @@ public class CvcConstraintValidator implements ConstraintValidator<ValidCVC, Int
   }
 
   @Override
-  public boolean isValid(Integer cvc, ConstraintValidatorContext context)
+  public boolean isValid(String cvc, ConstraintValidatorContext context)
   {
     boolean ret = false;
-    System.out.println(">>> CvcConstraintValidator.isValid() : cvc = " + cvc);
-    if (cvc != null && cvc >= 0)
+
+    if (!StringUtils.isBlank(cvc))
     {
-      int length = (int) (Math.log10(cvc) + 1);
-      System.out.println (">>> CvcConstraintValidator.isValid() : cvc = " + cvc + ", length = " + length);
-      ret = length >= 3 && length <= 4;
+      int length = cvc.length();
+      ret = cvc.matches("\\d{3,4}");
     }
     return ret;
   }

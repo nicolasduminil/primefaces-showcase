@@ -14,6 +14,6 @@ $.extend(PrimeFaces.locales['en'].messages, {
     
     'invalid.unicode':
         '{0} may only contain letters, spaces, hyphens and apostrophes',
-    'invalid.cvc':
+    'invalid.cvc.message':
         'Card Validation Code is invalid'
 });
