@@ -1,25 +1,20 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="jakarta.faces.facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:h="jakarta.faces.html"
                 template="/templates/masterLayout.xhtml">
-    <ui:define name="chapterItem">
-
-        <p:growl id="growl" autoUpdate="true"/>
-
-        <p:dialog header="What is the name of this book?"
-                  visible="true" widgetVar="dlgWidget">
-            <p:inputText id="name" value="#{ajaxCallbackParamBean.name}"/>
-
-            <p:commandButton id="save" value="Save" style="margin:10px;"
-                             process="@this name" update="name"
-                             actionListener="#{ajaxCallbackParamBean.save}"
-                             oncomplete="handleComplete(xhr, status, args)"/>
-        </p:dialog>
-
-        <h:outputScript id="handleCompleteScript" target="body">
-            /* <![CDATA[ */
+  <ui:define name="chapterItem">
+    <p:growl id="growl"/>
+    <p:dialog header="What is the name of this book?"
+              visible="true" widgetVar="dlgWidget">
+      <p:inputText id="name" value="#{ajaxCallbackParamBean.name}"/>
+      <p:commandButton id="save" value="Save" style="margin:10px;"
+                       process="@this name" update="name growl"
+                       actionListener="#{ajaxCallbackParamBean.save}"
+                       oncomplete="handleComplete(xhr, status, args)"/>
+    </p:dialog>
+    <h:outputScript id="handleCompleteScript" target="body">
+      /* <![CDATA[ */
             function handleComplete(xhr, status, args) {
                 if (args && args.validName) {
                     PF('dlgWidget').hide();
@@ -27,7 +22,6 @@
             }
 
             /* ]]> */
-        </h:outputScript>
-
-    </ui:define>
+    </h:outputScript>
+  </ui:define>
 </ui:composition>

@@ -12,7 +12,7 @@ import java.util.*;
 @ViewScoped
 public class DataTableColoringBean implements Serializable
 {
-  private List<CountryGdp> countryGdpList = List.of(
+  private List<CountryGdp> countryGdpList = new ArrayList<>(List.of(
     new CountryGdp("United States", 16720000),
     new CountryGdp("China", 9330000),
     new CountryGdp("Japan", 5007000),
@@ -21,7 +21,7 @@ public class DataTableColoringBean implements Serializable
     new CountryGdp("United Kingdom", 2490000),
     new CountryGdp("Brazil", 2190000),
     new CountryGdp("Russia", 2113000)
-  );
+  ));
 
   public List<CountryGdp> getCountryGdpList()
   {

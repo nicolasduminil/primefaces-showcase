@@ -17,9 +17,9 @@
       <h:graphicImage library="images" name="logo.png" styleClass="logo" title="PrimeFaces with Quarkus Showcase"/>
       <h:outputText value="Live samples of the PrimeFaces with Quarkus"/>
     </h:panelGroup>
-    <h:form id="mainForm2" enctype="multipart/form-data" prependId="false">
-      <h:panelGrid columns="2" columnClasses="chaptersMenuColumn,chaptersContentColumn">
-        <h:panelGroup layout="block">
+    <h:panelGrid columns="2" columnClasses="chaptersMenuColumn,chaptersContentColumn">
+      <h:panelGroup layout="block">
+        <h:form id="navForm">
           <p:tree id="bookTree" value="#{bookBean.root}" var="node" selectionMode="single"
                   selection="#{bookBean.selectedNode}">
             <p:ajax event="select" listener="#{bookBean.onNodeSelect}"/>
@@ -31,13 +31,12 @@
               <h:outputText value="#{node.name}"/>
             </p:treeNode>
           </p:tree>
-        </h:panelGroup>
-        <h:panelGroup layout="block">
-          <ui:insert name="chapterItem"/>
-        </h:panelGroup>
-      </h:panelGrid>
-    </h:form>
-
+        </h:form>
+      </h:panelGroup>
+      <h:panelGroup layout="block">
+        <ui:insert name="chapterItem"/>
+      </h:panelGroup>
+    </h:panelGrid>
     <h:outputStylesheet library="css" name="layout.css"/>
     <ui:insert name="appResources"/>
   </h:body>

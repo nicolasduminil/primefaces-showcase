@@ -36,6 +36,10 @@
     <param-value>true</param-value>
   </context-param>
   <context-param>
+    <param-name>primefaces.CACHE_PROVIDER</param-name>
+    <param-value>org.primefaces.cache.EHCacheProvider</param-value>
+  </context-param>
+  <context-param>
     <param-name>primefaces.THEME</param-name>
     <param-value>#{userSettingsBean.theme.name}</param-value>
   </context-param>

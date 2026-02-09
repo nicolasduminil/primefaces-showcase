@@ -1,55 +1,60 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-<f:view contentType="text/html" locale="en">
-    <h:head>
-        <title>PrimeFaces Cookbook - ShowCase</title>
-        <f:facet name="first">
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-            <meta http-equiv="pragma" content="no-cache"/>
-            <meta http-equiv="cache-control" content="no-cache"/>
-            <meta http-equiv="expires" content="0"/>
-        </f:facet>
-        <f:facet name="last">
-            <style type="text/css">
-                .ui-layout-pane-north .ui-layout-unit-content {
-                    overflow: visible;
-                }
-            </style>
-        </f:facet>
-    </h:head>
-    <h:body>
-        <p:layout fullPage="true">
-            <p:layoutUnit position="center">
-                <p:dialog header="Dialog in layout" modal="true"
-                          widgetVar="dlgWidget" appendTo="@(body)">
-                    <h:form>
-                        <h:inputText/>
-                        <p:commandButton value="Save" style="margin:10px;"/>
-                    </h:form>
-                </p:dialog>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="head">
+    <style type="text/css">
+        .pitfall-container {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            border: 1px solid #ccc;
+        }
+        .pitfall-header {
+            flex: 0 0 auto;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            z-index: 10;
+        }
+        .pitfall-content {
+            flex: 1 1 auto;
+            padding: 20px;
+            overflow: auto;
+        }
+    </style>
+  </ui:define>
 
-                <p:commandButton value="Show dialog" type="button"
-                                 onclick="PF('dlgWidget').show()"/>
-            </p:layoutUnit>
-            <p:layoutUnit position="north" size="80" resizable="false">
-                <h:form>
-                    <p:menubar>
-                        <p:submenu label="JavaScript Libraries">
-                            <p:menuitem value="jQuery" url="#"/>
-                            <p:menuitem value="Yahoo UI" url="#"/>
-                            <p:menuitem value="Prototype" url="#"/>
-                        </p:submenu>
-                        <p:menuitem value="Go Back" url="#"/>
-                    </p:menubar>
-                </h:form>
-            </p:layoutUnit>
-        </p:layout>
+  <ui:define name="chapterItem">
+    <div class="pitfall-container">
+      <div class="pitfall-header">
+        <p:menubar>
+          <p:submenu label="JavaScript Libraries" icon="pi pi-fw pi-code">
+            <p:menuitem value="jQuery" url="#"/>
+            <p:menuitem value="Yahoo UI" url="#"/>
+            <p:menuitem value="Prototype" url="#"/>
+          </p:submenu>
+          <p:menuitem value="Go Back" url="#"/>
+        </p:menubar>
+      </div>
 
-        <h:outputStylesheet library="css" name="layout.css"/>
-    </h:body>
-</f:view>
-</html>
+      <div class="pitfall-content">
+        <p:dialog header="Dialog in layout" modal="true"
+                  widgetVar="dlgWidget" appendTo="@(body)">
+          <h:panelGrid columns="1">
+            <h:inputText placeholder="Enter text..."/>
+            <p:commandButton value="Save" style="margin-top:10px;"/>
+          </h:panelGrid>
+        </p:dialog>
+
+        <p:commandButton value="Show dialog" type="button"
+                         icon="pi pi-external-link"
+                         onclick="PF('dlgWidget').show()"/>
+        <p style="margin-top: 20px;">
+          This content mimics the old <b>p:layout</b> behavior using modern Flexbox.
+          The "header" above stays fixed while this content area remains scrollable.
+        </p>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
