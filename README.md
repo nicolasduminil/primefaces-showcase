@@ -132,15 +132,10 @@ taken with a grain of salt:
   - Server-side rendering generates the full HTML for a page on the server in response to navigation. This avoids additional round-trips for data fetching and templating on the client since it's handled before the browser gets a response.
   - Server-side rendering generally reduces the time required for the page content to become visible. It makes it possible to avoid sending lots of JavaScript to the client. This helps to reduce a page's TBT (*Total Blocking Time*), which can also lead to a lower average response time as the main thread is not blocked as often during page load. When the main thread is blocked less often, user interactions will have more opportunities to run sooner.
   - With server-side rendering, users are less likely to be left waiting for CPU-bound JavaScript to run before they can access a page. 
+  - Server‑side rendering often has a better Time to First Byte (TTFB) and avoids large JavaScript bundles, which can improve perceived performance for many business use‑cases.
 
 Accordingly, the argument consisting of saying that the server-side rendering is
-bad while the client-side one would be better is just a myth. However, there is
-one potential trade-off here: generating pages on the server might take time, 
-which could result in a higher TTFB (*Time to First Byte*). This is the time between
-the user's click instant and the one when the first content byte comes in. And 
-admitting that this metric impacts more important others, like requests per 
-second or latency and uptime, it's difficult to assert that the web application's
-average response time is really affected in a user-sensible way.
+bad while the client-side one would be better is just a myth. 
 
 Consequently, it appears clearly from this analysis that developing Java web 
 applications using server-side rendering frameworks, like Jakarta Faces, not 
@@ -154,11 +149,32 @@ by things like multi-threading, transaction management, security, etc., aren't
 comfortable when it comes to command programming languages that have been designed
 to run in a browser.
 
+The following table summarizes the main differences between the two approaches:
+
+| Criteria | JavaScript/TypeScript-based front-end | Jakarta Faces-based front-end |
+| --- | --- | --- |
+| Technology stack | Multiple (Angular, React, Vue, etc.) | Single (Jakarta Faces) |
+| Development teams | Multiple (front-end and back-end) | Single (full-stack Java) |
+| Rendering | Client-side rendering | Server-side rendering |
+|Teams expertise | Requires expertise in multiple technologies | Requires expertise in a single technology |
+| Performance | Potentially lower due to client-side rendering | Potentially higher due to server-side rendering |
+| Complexity | Higher due to multiple technologies and teams | Lower due to single technology and team |
+| Maintainability | Potentially lower due to multiple codebases and technologies | Potentially higher due to single codebase and technology |
+| Security | Potentially lower due to client-side vulnerabilities | Potentially higher due to server-side control |
+| User experience | Potentially lower due to slower initial load and client-side rendering | Potentially higher due to faster initial load and server-side rendering |
+| Cost | Potentially higher due to multiple teams and technologies | Potentially lower due to single team and technology |
+| Scalability | Potentially higher due to client-side rendering | Potentially lower due to server-side rendering |
+| Development speed | Potentially lower due to multiple technologies and teams | Potentially higher due to single technology and team |
+
 So the good news here is that, if like me, you're a nostalgic of Jakarta Faces, 
 from now on, you can start implementing your front-ends with it, without the need
 for any Jakarta EE-compliant application server. That's because Quarkus, our 
 famous Supersonic Subatomic Java platform, provides a Jakarta Faces extension,
-allowing you to write beautiful front-ends like in the old good times. At 
+allowing you to write beautiful front-ends like in the old good times. 
+
+Quarkus offers fast development mode, cloud‑native performance, and optional 
+native compilation, making Jakarta Faces viable even in microservices‑centric 
+environments. At 
 Melloware Inc., they provide a PrimeFaces extension for Quarkus, as described 
 [here](https://github.com/quarkiverse/quarkus-primefaces). You'll find in the mentioned GIT repository a [showcase](https://github.com/melloware/quarkus-faces) application that 
 demonstrates, with consistent code examples, how to use every single PrimeFaces
