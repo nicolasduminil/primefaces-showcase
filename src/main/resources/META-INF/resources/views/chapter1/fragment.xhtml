@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Partial Process and Update with Fragment component</h3>
+    <p:panel header="User Registration">
+      <p:fragment autoUpdate="true">
+        <p:fieldset legend="Basic Info">
+          <h:panelGrid columns="3">
+            <p:outputLabel for="name" value="Name:"/>
+            <p:inputText id="name" value="#{fragmentBean.userName}" required="true"/>
+            <h:message id="nameMsg" for="name" style="color:red"/>
+            <h:panelGroup/>
+            <p:commandButton value="Save" actionListener="#{fragmentBean.saveUserInfo}"
+                             process="@parent" update="nameMsg"/>
+            <h:panelGroup/>
+          </h:panelGrid>
+        </p:fieldset>
+      </p:fragment>
+      <p:fragment autoUpdate="true">
+        <p:fieldset legend="Address">
+          <h:panelGrid columns="3">
+            <p:outputLabel for="address" value="Address:"/>
+            <p:inputText id="address" value="#{fragmentBean.address}" required="true"/>
+            <h:message id="addressMsg" for="address" style="color:red"/>
+            <h:panelGroup/>
+            <p:commandButton value="Save" actionListener="#{fragmentBean.saveAddressInfo}"
+                             process="@parent" update="addressMsg"/>
+            <h:panelGroup/>
+          </h:panelGrid>
+        </p:fieldset>
+      </p:fragment>
+    </p:panel>
+  </ui:define>
+</ui:composition>

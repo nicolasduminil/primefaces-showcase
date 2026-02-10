@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+
+    <h3 style="margin-top:0">
+      <strong>Oops, an unexpected error occured</strong>
+    </h3>
+
+    Message: #{pfExceptionHandler.message}
+    <br/>
+    Timestamp: #{pfExceptionHandler.formattedTimestamp}
+    <br/>
+    StackTrace: <h:outputText value="#{pfExceptionHandler.formattedStackTrace}"
+                              escape="false"/>
+
+  </ui:define>
+</ui:composition>

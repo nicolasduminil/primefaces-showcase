@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Listing data with OrderList</h3>
+    <p:growl id="growl" showDetail="true"/>
+    <h:panelGrid columns="2" cellpadding="5">
+
+      <h:outputText value="Simple"/>
+      <p:orderList id="simple" value="#{orderListBean.countries}"
+                   var="country" itemLabel="#{country}" itemValue="#{country}"/>
+
+      <h:outputText value="With Caption"/>
+      <p:orderList id="withCaption" value="#{orderListBean.countries}"
+                   var="country" itemLabel="#{country}" itemValue="#{country}">
+        <f:facet name="caption">
+          Countries
+        </f:facet>
+      </p:orderList>
+
+      <h:outputText value="With Controls on the Right"/>
+      <p:orderList id="controls" value="#{orderListBean.countries}" controlsLocation="right"
+                   var="country" itemLabel="#{country}" itemValue="#{country}"/>
+
+      <h:outputText value="With Effect"/>
+      <p:orderList id="withEffect" value="#{orderListBean.countries}" effect="explode"
+                   var="country" itemLabel="#{country}" itemValue="#{country}"/>
+
+      <h:outputText value="POJO Support"/>
+      <p:orderList id="pojo" value="#{orderListBean.cars}" var="car"
+                   itemValue="#{car}">
+        <f:converter converterId="fr.simplex_software.workshop.primefaces_showcase.converter.CarConverter"/>
+        <f:facet name="caption">Cars</f:facet>
+        <p:column>
+          <p:graphicImage value="/resources/images/autocomplete/#{car.name}.png" width="40" height="30"/>
+        </p:column>
+
+        <p:column>#{car.name}</p:column>
+      </p:orderList>
+
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>

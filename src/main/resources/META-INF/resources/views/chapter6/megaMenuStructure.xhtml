@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+  <p:megaMenu orientation="#{orientation}">
+    <p:submenu label="Women's Clothing" icon="ui-icon-person">
+      <p:column>
+        <p:submenu label="Shoes">
+          <p:menuitem value="Size UK 3-5" url="#" actionListener="#{megaMenuBean.addItem('Women shoes 3-5')}" ajax="true"/>
+          <p:menuitem value="Size UK 6-8" url="#" actionListener="#{megaMenuBean.addItem('Women shoes 6-8')}" ajax="true"/>
+        </p:submenu>
+        <p:submenu label="Jeans">
+          <p:menuitem value="Curve" url="#" actionListener="#{megaMenuBean.addItem('Jeans Curve')}" ajax="true"/>
+          <p:menuitem value="Maternity" url="#" actionListener="#{megaMenuBean.addItem('Jeans Maternity')}" ajax="true"/>
+          <p:menuitem value="Petites" url="#" actionListener="#{megaMenuBean.addItem('Jeans Petites')}" ajax="true"/>
+        </p:submenu>
+        <p:submenu label="Nightwear">
+          <p:menuitem value="Calvin Klein" url="#" actionListener="#{megaMenuBean.addItem('Nightwear Calvin Klein')}" ajax="true"/>
+          <p:menuitem value="Curvy Kate" url="#" actionListener="#{megaMenuBean.addItem('Nightware Curvy Kate')}" ajax="true"/>
+        </p:submenu>
+      </p:column>
+      <p:column>
+        <p:submenu label="Leggings">
+          <p:menuitem value="Long Sleeve" url="#" actionListener="#{megaMenuBean.addItem('Legings Long Sleeve')}" ajax="true"/>
+          <p:menuitem value="Short Sleeve" url="#" actionListener="#{megaMenuBean.addItem('Leggins Short Sleeve')}" ajax="true"/>
+        </p:submenu>
+        <p:submenu label="Skirts">
+          <p:menuitem value="American Apparel" url="#" actionListener="#{megaMenuBean.addItem('Skirt American Apparel')}" ajax="true"/>
+          <p:menuitem value="American Vintage" url="#" actionListener="#{megaMenuBean.addItem('Skirt American Vintage')}" ajax="true"/>
+          <p:menuitem value="Aqua" url="#" actionListener="#{megaMenuBean.addItem('Skirt Aqua')}" ajax="true"/>
+          <p:menuitem value="Dagmar" url="#" actionListener="#{megaMenuBean.addItem('Skirt Dagmar')}" ajax="true"/>
+          <p:menuitem value="Osasis" url="#" actionListener="#{megaMenuBean.addItem('Skirt Oasis')}" ajax="true"/>
+        </p:submenu>
+      </p:column>
+    </p:submenu>
+
+    <p:submenu label="Men's Clothing" icon="ui-icon-person">
+      <p:column>
+        <p:submenu label="Shoes">
+          <p:menuitem value="Size UK 3-5" url="#" actionListener="#{megaMenuBean.addItem('Men shoes 3-5')}" ajax="true"/>
+          <p:menuitem value="Size UK 6-8" url="#" actionListener="#{megaMenuBean.addItem('Men shoes 6-8')}" ajax="true"/>
+          <p:menuitem value="Size UK 9-12" url="#" actionListener="#{megaMenuBean.addItem('Men shoes 9-12')}" ajax="true"/>
+        </p:submenu>
+        <p:submenu label="T-Shirts">
+          <p:menuitem value="Addict" url="#" actionListener="#{megaMenuBean.addItem('T-Shirts Addict')}" ajax="true"/>
+          <p:menuitem value="Diesel" url="#" actionListener="#{megaMenuBean.addItem('T-shirts Diesel')}" ajax="true"/>
+          <p:menuitem value="Edwin" url="#" actionListener="#{megaMenuBean.addItem('T-Shirts Edwin')}" ajax="true"/>
+          <p:menuitem value="Sol Angeles" url="#" actionListener="#{megaMenuBean.addItem('T-Shirts Sol Angeles')}" ajax="true"/>
+          <p:menuitem value="Ted Baker" url="#" actionListener="#{megaMenuBean.addItem('T-Shirts Ted Baker')}" ajax="true"/>
+          <p:menuitem value="The Only Son" url="#" actionListener="#{megaMenuBean.addItem('T-Shirts The Only Son')}" ajax="true"/>
+        </p:submenu>
+      </p:column>
+      <p:column>
+        <p:submenu label="Leather Jackets">
+          <p:menuitem value="Diesel" url="#" actionListener="#{megaMenuBean.addItem('Leather Jacket Diesel')}" ajax="true"/>
+          <p:menuitem value="Superdry" url="#" actionListener="#{megaMenuBean.addItem('Leather Jacket Superdry')}" ajax="true"/>
+        </p:submenu>
+        <p:submenu label="Jeans">
+          <p:menuitem value="Curve" url="#" actionListener="#{megaMenuBean.addItem('Jeans Curve')}" ajax="true"/>
+          <p:menuitem value="Maternity" url="#" actionListener="#{megaMenuBean.addItem('Jeans Maternity')}" ajax="true"/>
+          <p:menuitem value="Petites" url="#" actionListener="#{megaMenuBean.addItem('Jeans Petites')}" ajax="true"/>
+        </p:submenu>
+        <p:submenu label="Swimwear">
+          <p:menuitem value="Boss Black" url="#" actionListener="#{megaMenuBean.addItem('Swinwear Boss Black')}" ajax="true"/>
+          <p:menuitem value="Fred Perry" url="#" actionListener="#{megaMenuBean.addItem('Swimwear Fred Perry')}" ajax="true"/>
+          <p:menuitem value="G-Star" url="#" actionListener="#{megaMenuBean.addItem('Swimwear G-Star')}" ajax="true"/>
+          <p:menuitem value="Humor" url="#" actionListener="#{megaMenuBean.addItem('Swimwear Humor')}" ajax="true"/>
+        </p:submenu>
+      </p:column>
+    </p:submenu>
+
+    <p:menuitem value="Shopping Cart"
+                onclick="PF('wdgtShoppingCart').show();"
+                update="shoppingCartGrp" icon="ui-icon-cart"/>
+
+  </p:megaMenu>
+</ui:composition>

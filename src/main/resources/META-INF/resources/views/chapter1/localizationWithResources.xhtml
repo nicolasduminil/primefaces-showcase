@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Localization with Resources</h3>
+    <h:panelGrid id="localPanel" columns="2" cellpadding="5">
+      <p:outputLabel for="language" value="Language:"/>
+      <p:selectOneMenu id="language" value="#{localizationBean.localeCode}">
+        <f:selectItems value="#{localizationBean.countriesInMap}"/>
+        <p:ajax listener="#{localizationBean.countryLocaleCodeChanged}" update="@parent"/>
+      </p:selectOneMenu>
+      <h:outputText id="questionText" value="#{msg['booleanButton.text']}"/>
+      <p:selectBooleanButton id="booleanBtn" value="#{localizationBean.selectedValue}"
+                             onLabel="#{msg['booleanButton.onLabel']}"
+                             offLabel="#{msg['booleanButton.offLabel']}"/>
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>

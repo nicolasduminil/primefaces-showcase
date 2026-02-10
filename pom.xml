@@ -35,17 +35,58 @@
     <dependency>
       <groupId>io.quarkiverse.primefaces</groupId>
       <artifactId>quarkus-primefaces</artifactId>
-      <version>3.15.8</version>
+      <version>4.15.12</version>
     </dependency>
     <dependency>
       <groupId>io.quarkiverse.primefaces</groupId>
       <artifactId>quarkus-primefaces-extensions</artifactId>
-      <version>3.15.8</version>
+      <version>4.15.12</version>
     </dependency>
     <dependency>
       <groupId>org.primefaces.themes</groupId>
       <artifactId>all-themes</artifactId>
       <version>1.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>software.xdev</groupId>
+      <artifactId>chartjs-java-model</artifactId>
+      <version>2.9.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>font-awesome</artifactId>
+      <version>7.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.rometools</groupId>
+      <artifactId>rome</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>5.5.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.lowagie</groupId>
+      <artifactId>itext</artifactId>
+      <version>2.1.7</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.6.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.21.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>2.10.9.2</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 
@@ -69,3 +110,4 @@
     </plugins>
   </build>
 </project>
+ 

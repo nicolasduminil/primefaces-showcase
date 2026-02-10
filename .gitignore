@@ -1,11 +1,8 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-.env
-env.properties
-### IntelliJ IDEA ###
-.idea/
-*.iws
+.*
+target
+*.?ar
 *.iml
 *.ipr
+*.iws
+*.NavData
+*.navData

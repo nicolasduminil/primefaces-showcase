@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Rich Text Editing with the Editor</h3>
+    <h:panelGrid columdns="2" cellpadding="5">
+      <h:outputText value="Default Editor"/>
+      <p:textEditor value="#{editorBean.text}" secure="false"/>
+
+      <h:outputText value="Editor with Custom Controls"/>
+      <p:textEditor value="#{editorBean.text}" controls="bold italic strikethrough" secure="false"/>
+
+      <h:outputText value="Clearing Contents of Editor"/>
+      <h:panelGroup>
+        <p:textEditor value="#{editorBean.text}" widgetVar="editorClear" secure="false"/>
+        <p:commandButton type="button" value="Clear" onclick="PF('editorClear').clear()" icon="ui-icon-close"/>
+      </h:panelGroup>
+
+      <h:outputText value="Selecting all of the text in Editor"/>
+      <h:panelGroup>
+        <p:textEditor value="#{editorBean.text}" widgetVar="editorSelect" secure="false"/>
+        <p:commandButton type="button" value="Select" onclick="PF('editorSelect').selectAll()"/>
+      </h:panelGroup>
+
+      <h:outputText value="Editor inside Dialog Box"/>
+      <h:panelGroup>
+        <p:dialog widgetVar="editorDialog" modal="true">
+          <p:textEditor secure="false"/>
+        </p:dialog>
+        <p:commandButton value="Show" onclick="PF('editorDialog').show()"/>
+      </h:panelGroup>
+
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>

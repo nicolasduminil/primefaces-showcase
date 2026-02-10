@@ -1,0 +1,25 @@
+package fr.simplex_software.workshop.primefaces_showcase.model.chapter2;
+
+import java.io.*;
+
+public class Theme implements Serializable
+{
+  private String displayName;
+  private String name;
+
+  public Theme(String displayName, String name)
+  {
+    this.displayName = displayName;
+    this.name = name;
+  }
+
+  public final String getDisplayName()
+  {
+    return displayName;
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+}

@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                template="/templates/masterLayout.xhtml">
+  <ui:define name="chapterItem">
+    <h3 style="margin-top:0">Internationalization of the Faces Messages</h3>
+    <p:growl id="growl"/>
+    <h:panelGrid columns="2">
+      <p:outputLabel for="language" value="Language:"/>
+      <p:selectOneMenu id="language" value="#{localizationBean.localeCode}">
+        <f:selectItems value="#{localizationBean.countriesInMap}"/>
+        <p:ajax listener="#{localizationBean.countryLocaleCodeChanged}"/>
+      </p:selectOneMenu>
+      <p:commandButton action="#{localizationBean.addMessage}" value="Display Message" update="growl"/>
+    </h:panelGrid>
+  </ui:define>
+</ui:composition>

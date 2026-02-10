@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html" locale="en">
+  <h:head>
+    <title>PrimeFaces with Quarkus ShowCase</title>
+    <f:facet name="first">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </f:facet>
+    <ui:insert name="head"/>
+    <ui:insert name="appResources"/>
+  </h:head>
+  <h:body>
+    <h:panelGroup layout="block" styleClass="slogan" style="position: static; margin: 10px;">
+      <h:graphicImage library="images" name="logo.png" styleClass="logo" title="PrimeFaces with Quarkus Showcase"/>
+      <h:outputText value="Live samples of the PrimeFaces with Quarkus"/>
+    </h:panelGroup>
+    <h:form id="mainForm" prependId="false">
+      <p:toolbar style="margin-bottom: 20px">
+        <f:facet name="left">
+          <p:commandButton type="button" value="Home" icon="pi pi-home" styleClass="ui-button-flat"/>
+
+          <span class="ui-separator">
+            <span class="ui-icon pi pi-ellipsis-v"/>
+          </span>
+
+          <p:outputLabel for="themeSwitcher" value="Theme: " style="margin-left: 10px; margin-right: 5px"/>
+          <p:selectOneMenu id="themeSwitcher" value="#{userSettingsBean.theme}"
+                           converter="#{themeConverter}" var="t" style="width:165px">
+            <f:selectItems value="#{userSettingsBean.availableThemes}" var="theme"
+                           itemLabel="#{theme.name}" itemValue="#{theme}"/>
+            <p:column>
+              <h:outputText value="#{t.name}"/>
+            </p:column>
+            <p:ajax listener="#{userSettingsBean.saveTheme}"
+                    oncomplete="PrimeFaces.changeTheme(args.theme)"/>
+          </p:selectOneMenu>
+
+          <span class="ui-separator">
+            <span class="ui-icon pi pi-ellipsis-v"/>
+          </span>
+
+          <p:menuButton value="Project Links" style="margin-left: 5px">
+            <p:menuitem value="PrimeFaces Docs" url="https://www.primefaces.org/documentation/"
+                        icon="pi pi-external-link"/>
+            <p:menuitem value="Quarkus Guide" url="https://quarkus.io/guides/" icon="pi pi-external-link"/>
+            <p:separator/>
+            <p:menuitem value="About" icon="pi pi-info-circle"/>
+          </p:menuButton>
+        </f:facet>
+      </p:toolbar>
+      <h:panelGrid columns="2" columnClasses="chaptersMenuColumn,chaptersContentColumn">
+        <h:panelGroup layout="block">
+          <p:tree id="bookTree" value="#{bookBean.root}" var="node" selectionMode="single"
+                  selection="#{bookBean.selectedNode}">
+            <p:ajax event="select" listener="#{bookBean.onNodeSelect}"/>
+            <p:treeNode type="chapter" expandedIcon="ui-icon-folder-open"
+                        collapsedIcon="ui-icon-folder-collapsed">
+              <h:outputText value="#{node.name}"/>
+            </p:treeNode>
+            <p:treeNode type="chapteritem" icon="ui-icon-document">
+              <h:outputText value="#{node.name}"/>
+            </p:treeNode>
+          </p:tree>
+        </h:panelGroup>
+        <h:panelGroup layout="block">
+          <ui:insert name="chapterItem"/>
+        </h:panelGroup>
+      </h:panelGrid>
+    </h:form>
+    <h:outputStylesheet library="css" name="layout.css"/>
+  </h:body>
+</f:view>
+</html>
