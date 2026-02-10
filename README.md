@@ -171,7 +171,7 @@ by Mert Caliskan and Oleg Varaskin, published in 2013, with a 2nd edition in
 2015. This book is one of the most comprehensive and detailed resources about 
 Jakarta Faces and PrimeFaces. So, I refactored all the code examples of this 
 book to make them work with the latest versions of Quarkus and PrimeFaces. If 
-you're interested, you'll find the project [https://github.com/nicolasduminil/primefaces-showcase.git](here). 
+you're interested, you'll find the project [here](https://github.com/nicolasduminil/primefaces-showcase.git). 
 
 You'll tell me what it feels like there!
 
