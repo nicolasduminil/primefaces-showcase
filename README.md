@@ -183,11 +183,29 @@ on both an application server, like Wildfly, and in Quarkus.
 
 I've tested it recently. Those of you having used in the past Jakarta Faces must
 certainly remember the book ["Primefaces Cookbook"](https://www.amazon.fr/PrimeFaces-Cookbook-Second-Mert-Caliskan/dp/1784393428),
-by Mert Caliskan and Oleg Varaskin, published in 2013, with a 2nd edition in 
-2015. This book is one of the most comprehensive and detailed resources about 
+by Mert Caliskan and Oleg Varaskin, published in 2013, with a 2nd edition in 2015.
+This book is one of the most comprehensive and detailed resources about 
 Jakarta Faces and PrimeFaces. So, I refactored all the code examples of this 
 book to make them work with the latest versions of Quarkus and PrimeFaces. If 
-you're interested, you'll find the project [here](https://github.com/nicolasduminil/primefaces-showcase.git). 
+you're interested, you'll find the project [here](https://github.com/nicolasduminil/primefaces-showcase.git).
+
+If you want to give it a try, proceed as follows:
+
+    $ git clone https://github.com/nicolasduminil/primefaces-showcase.git
+    $ cd primefaces-showcase
+    $ mvn package
+    $ java -jar target/quarkus-app/quarkus-run.jar
+
+Then, go to http://localhost:8080 and the following screen will be displayed in your browser:
+
+![Live samples of the PrimeFaces with Quarkus](fig2.png "Live samples of the PrimeFaces with Quarkus")
+
+Here, you are given the chance to exercice most of Jakarta Faces and its 
+implementation Mojara and PrimeFaces, and to see how they work in a modern Java
+web application built with Quarkus. Just unfold the different nodes in the left-hand
+tree and click on the different samples to see them in action. You may change 
+the current theme as well by clicking on the "Change Theme" button at the top 
+right of the page.
 
 You'll tell me what it feels like there!
 
